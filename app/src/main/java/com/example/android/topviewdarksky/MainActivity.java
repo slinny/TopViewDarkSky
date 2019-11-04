@@ -12,3 +12,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 }
+
+/*
+1. models
+2. database
+3. repository and viewmodel
+4. retrofit
+5. recyclerview
+6. rxjava livedata databinding dagger2 eventbus
+ */
