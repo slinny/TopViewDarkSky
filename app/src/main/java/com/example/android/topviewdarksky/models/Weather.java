@@ -1,63 +1,43 @@
 package com.example.android.topviewdarksky.models;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public abstract class Weather {
+import java.io.Serializable;
 
-    @Expose
-    @SerializedName("daily")
-    private Daily daily;
-    @Expose
-    @SerializedName("currently")
-    private Currently currently;
-    @Expose
+public class Weather implements Serializable {
+
     @SerializedName("timezone")
-    private String timezone;
-    @Expose
-    @SerializedName("longitude")
-    private double longitude;
-    @Expose
-    @SerializedName("latitude")
-    private double latitude;
+    private String timezone = "";
 
-    public Daily getDaily() {
-        return daily;
-    }
+    @SerializedName("daily")
+    private DailyWeather dailyWeather = null;
 
-    public void setDaily(Daily daily) {
-        this.daily = daily;
-    }
+    @SerializedName("currently")
+    private CurrentWeather currentWeather = null;
 
-    public Currently getCurrently() {
-        return currently;
-    }
-
-    public void setCurrently(Currently currently) {
-        this.currently = currently;
-    }
-
-    public String getTimezone() {
+    public String getTimezone(){
         return timezone;
     }
 
-    public void setTimezone(String timezone) {
+    public void setTimezone(String timezone){
         this.timezone = timezone;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public DailyWeather getDailyWeather(){
+        return dailyWeather;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+
+    public void setDailyWeather(DailyWeather dailyWeather){
+        this.dailyWeather = dailyWeather;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public CurrentWeather getCurrentWeather(){
+        return currentWeather;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setCurrentWeather(CurrentWeather currentWeather){
+        this.currentWeather = currentWeather;
     }
+
 }
