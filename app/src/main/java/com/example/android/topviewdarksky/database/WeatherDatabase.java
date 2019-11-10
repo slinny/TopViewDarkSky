@@ -6,13 +6,13 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.android.topviewdarksky.models.CurrentWeather;
-import com.example.android.topviewdarksky.models.DailyWeatherData;
+import com.example.android.topviewdarksky.entities.CurrentWeather;
+import com.example.android.topviewdarksky.entities.DailyWeatherData;
 
 import kotlin.jvm.Synchronized;
 
 //initializes sqlite database wuth the version number and entities and implements singleton instance
-@Database(entities ={CurrentWeather.class, DailyWeatherData.class}, version = 1)
+@Database(entities ={CurrentWeather.class, DailyWeatherData.class}, version = 1, exportSchema = false)
 public abstract class WeatherDatabase extends RoomDatabase {
 
     public abstract WeatherDAO weatherDAO();

@@ -1,4 +1,4 @@
-package com.example.android.topviewdarksky.models;
+package com.example.android.topviewdarksky.entities;
 
 import androidx.annotation.Nullable;
 import androidx.room.Entity;

@@ -5,8 +5,8 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.android.topviewdarksky.models.CurrentWeather;
-import com.example.android.topviewdarksky.models.DailyWeatherData;
+import com.example.android.topviewdarksky.entities.CurrentWeather;
+import com.example.android.topviewdarksky.entities.DailyWeatherData;
 
 import java.util.List;
 
