@@ -1,212 +1,65 @@
 package com.example.android.topviewdarksky.models;
 
-import com.google.gson.annotations.Expose;
+import androidx.annotation.Nullable;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "currentWeatherTable")
 public class Currently {
-    @Expose
-    @SerializedName("ozone")
-    private double ozone;
-    @Expose
-    @SerializedName("visibility")
-    private double visibility;
-    @Expose
-    @SerializedName("uvIndex")
-    private int uvindex;
-    @Expose
-    @SerializedName("cloudCover")
-    private double cloudcover;
-    @Expose
-    @SerializedName("windBearing")
-    private int windbearing;
-    @Expose
-    @SerializedName("windGust")
-    private double windgust;
-    @Expose
-    @SerializedName("windSpeed")
-    private double windspeed;
-    @Expose
-    @SerializedName("pressure")
-    private double pressure;
-    @Expose
-    @SerializedName("humidity")
-    private double humidity;
-    @Expose
-    @SerializedName("dewPoint")
-    private double dewpoint;
-    @Expose
-    @SerializedName("apparentTemperature")
-    private double apparenttemperature;
-    @Expose
-    @SerializedName("temperature")
-    private double temperature;
-    @Expose
-    @SerializedName("precipType")
-    private String preciptype;
-    @Expose
-    @SerializedName("precipProbability")
-    private double precipprobability;
-    @Expose
-    @SerializedName("precipIntensityError")
-    private double precipintensityerror;
-    @Expose
-    @SerializedName("precipIntensity")
-    private double precipintensity;
-    @Expose
-    @SerializedName("nearestStormDistance")
-    private int neareststormdistance;
-    @Expose
-    @SerializedName("icon")
-    private String icon;
-    @Expose
+
+    @PrimaryKey(autoGenerate = true)
+    private int id = 0;
+
     @SerializedName("summary")
-    private String summary;
-    @Expose
-    @SerializedName("time")
-    private int time;
+    private String summary = "";
 
-    public double getOzone() {
-        return ozone;
+    @SerializedName("temperature")
+    private String temperature = "";
+
+    @SerializedName("windSpeed")
+    private String windSpeed = "";
+
+    private String time ="";
+
+    @SerializedName("humidity")
+    private String humidity = "";
+
+    @SerializedName("apparentTemperature")
+    private String apparentTemp = "";
+
+    @SerializedName("precipType")
+    private String precipType = "";
+
+    @SerializedName("precipProbability")
+    private String precipProbability = "";
+
+    public String getPrecipType() {
+        if(precipType==null){
+            precipType = "N/A";
+        }
+        return precipType;
     }
 
-    public void setOzone(double ozone) {
-        this.ozone = ozone;
+    public String getTime() {
+        return time;
     }
 
-    public double getVisibility() {
-        return visibility;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    public void setVisibility(double visibility) {
-        this.visibility = visibility;
+    public void setPrecipType(String precipType) {
+        this.precipType = precipType;
     }
 
-    public int getUvindex() {
-        return uvindex;
+    public String getPrecipProbability() {
+        return precipProbability;
     }
 
-    public void setUvindex(int uvindex) {
-        this.uvindex = uvindex;
-    }
-
-    public double getCloudcover() {
-        return cloudcover;
-    }
-
-    public void setCloudcover(double cloudcover) {
-        this.cloudcover = cloudcover;
-    }
-
-    public int getWindbearing() {
-        return windbearing;
-    }
-
-    public void setWindbearing(int windbearing) {
-        this.windbearing = windbearing;
-    }
-
-    public double getWindgust() {
-        return windgust;
-    }
-
-    public void setWindgust(double windgust) {
-        this.windgust = windgust;
-    }
-
-    public double getWindspeed() {
-        return windspeed;
-    }
-
-    public void setWindspeed(double windspeed) {
-        this.windspeed = windspeed;
-    }
-
-    public double getPressure() {
-        return pressure;
-    }
-
-    public void setPressure(double pressure) {
-        this.pressure = pressure;
-    }
-
-    public double getHumidity() {
-        return humidity;
-    }
-
-    public void setHumidity(double humidity) {
-        this.humidity = humidity;
-    }
-
-    public double getDewpoint() {
-        return dewpoint;
-    }
-
-    public void setDewpoint(double dewpoint) {
-        this.dewpoint = dewpoint;
-    }
-
-    public double getApparenttemperature() {
-        return apparenttemperature;
-    }
-
-    public void setApparenttemperature(double apparenttemperature) {
-        this.apparenttemperature = apparenttemperature;
-    }
-
-    public double getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(double temperature) {
-        this.temperature = temperature;
-    }
-
-    public String getPreciptype() {
-        return preciptype;
-    }
-
-    public void setPreciptype(String preciptype) {
-        this.preciptype = preciptype;
-    }
-
-    public double getPrecipprobability() {
-        return precipprobability;
-    }
-
-    public void setPrecipprobability(double precipprobability) {
-        this.precipprobability = precipprobability;
-    }
-
-    public double getPrecipintensityerror() {
-        return precipintensityerror;
-    }
-
-    public void setPrecipintensityerror(double precipintensityerror) {
-        this.precipintensityerror = precipintensityerror;
-    }
-
-    public double getPrecipintensity() {
-        return precipintensity;
-    }
-
-    public void setPrecipintensity(double precipintensity) {
-        this.precipintensity = precipintensity;
-    }
-
-    public int getNeareststormdistance() {
-        return neareststormdistance;
-    }
-
-    public void setNeareststormdistance(int neareststormdistance) {
-        this.neareststormdistance = neareststormdistance;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
+    public void setPrecipProbability(String precipProbability) {
+        this.precipProbability = precipProbability;
     }
 
     public String getSummary() {
@@ -217,11 +70,77 @@ public class Currently {
         this.summary = summary;
     }
 
-    public int getTime() {
-        return time;
+    public String getTemperature() {
+        return temperature;
     }
 
-    public void setTime(int time) {
-        this.time = time;
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
+    }
+
+    public String getWindSpeed() {
+        return windSpeed;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int id){
+        this.id = id;
+    }
+
+    public void setWindSpeed(String windSpeed) {
+        this.windSpeed = windSpeed;
+    }
+
+    public String getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(String humidity) {
+        this.humidity = humidity;
+    }
+
+    public String getApparentTemp() {
+        return apparentTemp;
+    }
+
+    public void setApparentTemp(String apparentTemp) {
+        this.apparentTemp = apparentTemp;
+    }
+
+    public Currently(int id, String summary, String humidity, String windSpeed, String temperature, String apparentTemp) {
+        this.id = id;
+        this.temperature = temperature;
+        this.apparentTemp = apparentTemp;
+        this.summary = summary;
+        this.humidity = humidity;
+        this.windSpeed = windSpeed;
+    }
+
+    public Currently(Currently currentWeather){
+        this.apparentTemp = currentWeather.apparentTemp;
+        this.temperature = currentWeather.temperature;
+        this.humidity = currentWeather.humidity;
+        this.summary = currentWeather.summary;
+        this.windSpeed = currentWeather.windSpeed;
+        this.id = currentWeather.id;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(obj == null){
+            return false;
+        }
+
+        if(getClass() != obj.getClass()){
+            return false;
+        }
+
+        Currently data =(Currently) obj;
+        return data.getId() == getId() && data.getWindSpeed().equals(getWindSpeed()) && data.getSummary().equals(getSummary())
+                && data.getTemperature().equals(getTemperature()) && data.getApparentTemp().equals(getApparentTemp())
+                && data.getHumidity().equals(getHumidity());
     }
 }

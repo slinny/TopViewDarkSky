@@ -1,422 +1,75 @@
 package com.example.android.topviewdarksky.models;
 
-import com.google.gson.annotations.Expose;
+import androidx.annotation.Nullable;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "dailyWeatherTable")
 public class Data {
-    @Expose
-    @SerializedName("apparentTemperatureMaxTime")
-    private int apparenttemperaturemaxtime;
-    @Expose
-    @SerializedName("apparentTemperatureMax")
-    private double apparenttemperaturemax;
-    @Expose
-    @SerializedName("apparentTemperatureMinTime")
-    private int apparenttemperaturemintime;
-    @Expose
-    @SerializedName("apparentTemperatureMin")
-    private double apparenttemperaturemin;
-    @Expose
-    @SerializedName("temperatureMaxTime")
-    private int temperaturemaxtime;
-    @Expose
-    @SerializedName("temperatureMax")
-    private double temperaturemax;
-    @Expose
-    @SerializedName("temperatureMinTime")
-    private int temperaturemintime;
-    @Expose
-    @SerializedName("temperatureMin")
-    private double temperaturemin;
-    @Expose
-    @SerializedName("ozone")
-    private double ozone;
-    @Expose
-    @SerializedName("visibility")
-    private int visibility;
-    @Expose
-    @SerializedName("uvIndexTime")
-    private int uvindextime;
-    @Expose
-    @SerializedName("uvIndex")
-    private int uvindex;
-    @Expose
-    @SerializedName("cloudCover")
-    private double cloudcover;
-    @Expose
-    @SerializedName("windBearing")
-    private int windbearing;
-    @Expose
-    @SerializedName("windGustTime")
-    private int windgusttime;
-    @Expose
-    @SerializedName("windGust")
-    private double windgust;
-    @Expose
-    @SerializedName("windSpeed")
-    private double windspeed;
-    @Expose
-    @SerializedName("pressure")
-    private double pressure;
-    @Expose
-    @SerializedName("humidity")
-    private double humidity;
-    @Expose
-    @SerializedName("dewPoint")
-    private double dewpoint;
-    @Expose
-    @SerializedName("apparentTemperatureLowTime")
-    private int apparenttemperaturelowtime;
-    @Expose
-    @SerializedName("apparentTemperatureLow")
-    private double apparenttemperaturelow;
-    @Expose
-    @SerializedName("apparentTemperatureHighTime")
-    private int apparenttemperaturehightime;
-    @Expose
-    @SerializedName("apparentTemperatureHigh")
-    private double apparenttemperaturehigh;
-    @Expose
-    @SerializedName("temperatureLowTime")
-    private int temperaturelowtime;
-    @Expose
-    @SerializedName("temperatureLow")
-    private double temperaturelow;
-    @Expose
-    @SerializedName("temperatureHighTime")
-    private int temperaturehightime;
-    @Expose
-    @SerializedName("temperatureHigh")
-    private double temperaturehigh;
-    @Expose
-    @SerializedName("precipType")
-    private String preciptype;
-    @Expose
-    @SerializedName("precipProbability")
-    private double precipprobability;
-    @Expose
-    @SerializedName("precipIntensityMaxTime")
-    private int precipintensitymaxtime;
-    @Expose
-    @SerializedName("precipIntensityMax")
-    private double precipintensitymax;
-    @Expose
-    @SerializedName("precipIntensity")
-    private double precipintensity;
-    @Expose
-    @SerializedName("moonPhase")
-    private double moonphase;
-    @Expose
-    @SerializedName("sunsetTime")
-    private int sunsettime;
-    @Expose
-    @SerializedName("sunriseTime")
-    private int sunrisetime;
-    @Expose
-    @SerializedName("icon")
-    private String icon;
-    @Expose
+
+    @PrimaryKey(autoGenerate = true)
+    private int id = 0;
+
+    private String tab ="";
+
     @SerializedName("summary")
-    private String summary;
-    @Expose
-    @SerializedName("time")
-    private int time;
-
-    public int getApparenttemperaturemaxtime() {
-        return apparenttemperaturemaxtime;
-    }
-
-    public void setApparenttemperaturemaxtime(int apparenttemperaturemaxtime) {
-        this.apparenttemperaturemaxtime = apparenttemperaturemaxtime;
-    }
-
-    public double getApparenttemperaturemax() {
-        return apparenttemperaturemax;
-    }
-
-    public void setApparenttemperaturemax(double apparenttemperaturemax) {
-        this.apparenttemperaturemax = apparenttemperaturemax;
-    }
-
-    public int getApparenttemperaturemintime() {
-        return apparenttemperaturemintime;
-    }
-
-    public void setApparenttemperaturemintime(int apparenttemperaturemintime) {
-        this.apparenttemperaturemintime = apparenttemperaturemintime;
-    }
-
-    public double getApparenttemperaturemin() {
-        return apparenttemperaturemin;
-    }
-
-    public void setApparenttemperaturemin(double apparenttemperaturemin) {
-        this.apparenttemperaturemin = apparenttemperaturemin;
-    }
-
-    public int getTemperaturemaxtime() {
-        return temperaturemaxtime;
-    }
-
-    public void setTemperaturemaxtime(int temperaturemaxtime) {
-        this.temperaturemaxtime = temperaturemaxtime;
-    }
-
-    public double getTemperaturemax() {
-        return temperaturemax;
-    }
-
-    public void setTemperaturemax(double temperaturemax) {
-        this.temperaturemax = temperaturemax;
-    }
-
-    public int getTemperaturemintime() {
-        return temperaturemintime;
-    }
-
-    public void setTemperaturemintime(int temperaturemintime) {
-        this.temperaturemintime = temperaturemintime;
-    }
-
-    public double getTemperaturemin() {
-        return temperaturemin;
-    }
-
-    public void setTemperaturemin(double temperaturemin) {
-        this.temperaturemin = temperaturemin;
-    }
-
-    public double getOzone() {
-        return ozone;
-    }
-
-    public void setOzone(double ozone) {
-        this.ozone = ozone;
-    }
-
-    public int getVisibility() {
-        return visibility;
-    }
-
-    public void setVisibility(int visibility) {
-        this.visibility = visibility;
-    }
-
-    public int getUvindextime() {
-        return uvindextime;
-    }
-
-    public void setUvindextime(int uvindextime) {
-        this.uvindextime = uvindextime;
-    }
-
-    public int getUvindex() {
-        return uvindex;
-    }
-
-    public void setUvindex(int uvindex) {
-        this.uvindex = uvindex;
-    }
-
-    public double getCloudcover() {
-        return cloudcover;
-    }
+    private String summary = "";
 
-    public void setCloudcover(double cloudcover) {
-        this.cloudcover = cloudcover;
-    }
+    @SerializedName("humidity")
+    private String humidity = "";
 
-    public int getWindbearing() {
-        return windbearing;
-    }
+    @SerializedName("dewPoint")
+    private String dewPoint = "";
 
-    public void setWindbearing(int windbearing) {
-        this.windbearing = windbearing;
-    }
+    @SerializedName("windSpeed")
+    private String windSpeed = "";
 
-    public int getWindgusttime() {
-        return windgusttime;
-    }
+    @SerializedName("precipType")
+    private String precipType = "";
 
-    public void setWindgusttime(int windgusttime) {
-        this.windgusttime = windgusttime;
-    }
+    @SerializedName("precipProbability")
+    private String precipProbability = "";
 
-    public double getWindgust() {
-        return windgust;
-    }
+    @SerializedName("temperatureHigh")
+    private String temperatureHigh = "";
 
-    public void setWindgust(double windgust) {
-        this.windgust = windgust;
-    }
+    @SerializedName("temperatureLow")
+    private String temperatureLow = "";
 
-    public double getWindspeed() {
-        return windspeed;
-    }
+    //hidden
+    @SerializedName("windBearing")
+    private String windBearing = "";
 
-    public void setWindspeed(double windspeed) {
-        this.windspeed = windspeed;
-    }
+    @SerializedName("pressure")
+    private String pressure = "";
 
-    public double getPressure() {
-        return pressure;
-    }
+    @SerializedName("visibility")
+    private String visibility = "";
 
-    public void setPressure(double pressure) {
-        this.pressure = pressure;
-    }
+    private String time ="";
 
-    public double getHumidity() {
-        return humidity;
-    }
+    @SerializedName("moonPhase")
+    private String moonPhase = "";
 
-    public void setHumidity(double humidity) {
-        this.humidity = humidity;
-    }
+    @SerializedName("sunriseTime")
+    private String sunriseTime = "";
 
-    public double getDewpoint() {
-        return dewpoint;
-    }
+    @SerializedName("sunsetTime")
+    private String sunsetTime = "";
 
-    public void setDewpoint(double dewpoint) {
-        this.dewpoint = dewpoint;
-    }
+    @SerializedName("cloudCover")
+    private String cloudCover = "";
 
-    public int getApparenttemperaturelowtime() {
-        return apparenttemperaturelowtime;
-    }
+    @SerializedName("temperatureHighTime")
+    private String temperatureHighTime = "";
 
-    public void setApparenttemperaturelowtime(int apparenttemperaturelowtime) {
-        this.apparenttemperaturelowtime = apparenttemperaturelowtime;
-    }
+    @SerializedName("temperatureLowTime")
+    private String temperatureLowTime = "";
 
-    public double getApparenttemperaturelow() {
-        return apparenttemperaturelow;
-    }
-
-    public void setApparenttemperaturelow(double apparenttemperaturelow) {
-        this.apparenttemperaturelow = apparenttemperaturelow;
-    }
-
-    public int getApparenttemperaturehightime() {
-        return apparenttemperaturehightime;
-    }
-
-    public void setApparenttemperaturehightime(int apparenttemperaturehightime) {
-        this.apparenttemperaturehightime = apparenttemperaturehightime;
-    }
-
-    public double getApparenttemperaturehigh() {
-        return apparenttemperaturehigh;
-    }
-
-    public void setApparenttemperaturehigh(double apparenttemperaturehigh) {
-        this.apparenttemperaturehigh = apparenttemperaturehigh;
-    }
-
-    public int getTemperaturelowtime() {
-        return temperaturelowtime;
-    }
-
-    public void setTemperaturelowtime(int temperaturelowtime) {
-        this.temperaturelowtime = temperaturelowtime;
-    }
-
-    public double getTemperaturelow() {
-        return temperaturelow;
-    }
-
-    public void setTemperaturelow(double temperaturelow) {
-        this.temperaturelow = temperaturelow;
-    }
-
-    public int getTemperaturehightime() {
-        return temperaturehightime;
-    }
-
-    public void setTemperaturehightime(int temperaturehightime) {
-        this.temperaturehightime = temperaturehightime;
-    }
-
-    public double getTemperaturehigh() {
-        return temperaturehigh;
-    }
-
-    public void setTemperaturehigh(double temperaturehigh) {
-        this.temperaturehigh = temperaturehigh;
-    }
-
-    public String getPreciptype() {
-        return preciptype;
-    }
-
-    public void setPreciptype(String preciptype) {
-        this.preciptype = preciptype;
-    }
-
-    public double getPrecipprobability() {
-        return precipprobability;
-    }
-
-    public void setPrecipprobability(double precipprobability) {
-        this.precipprobability = precipprobability;
-    }
-
-    public int getPrecipintensitymaxtime() {
-        return precipintensitymaxtime;
-    }
-
-    public void setPrecipintensitymaxtime(int precipintensitymaxtime) {
-        this.precipintensitymaxtime = precipintensitymaxtime;
-    }
-
-    public double getPrecipintensitymax() {
-        return precipintensitymax;
-    }
-
-    public void setPrecipintensitymax(double precipintensitymax) {
-        this.precipintensitymax = precipintensitymax;
-    }
-
-    public double getPrecipintensity() {
-        return precipintensity;
-    }
-
-    public void setPrecipintensity(double precipintensity) {
-        this.precipintensity = precipintensity;
-    }
-
-    public double getMoonphase() {
-        return moonphase;
-    }
-
-    public void setMoonphase(double moonphase) {
-        this.moonphase = moonphase;
-    }
-
-    public int getSunsettime() {
-        return sunsettime;
-    }
-
-    public void setSunsettime(int sunsettime) {
-        this.sunsettime = sunsettime;
-    }
-
-    public int getSunrisetime() {
-        return sunrisetime;
-    }
-
-    public void setSunrisetime(int sunrisetime) {
-        this.sunrisetime = sunrisetime;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
+    @SerializedName("precipIntensityMaxTime")
+    private String precipIntensityMaxTime = "";
 
     public String getSummary() {
         return summary;
@@ -426,11 +79,232 @@ public class Data {
         this.summary = summary;
     }
 
-    public int getTime() {
+    public String getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(String humidity) {
+        this.humidity = humidity;
+    }
+
+    public String getDewPoint() {
+        return dewPoint;
+    }
+
+    public void setDewPoint(String dewPoint) {
+        this.dewPoint = dewPoint;
+    }
+
+    public String getWindSpeed() {
+        return windSpeed;
+    }
+
+    public void setWindSpeed(String windSpeed) {
+        this.windSpeed = windSpeed;
+    }
+
+    public String getPrecipType() {
+        return precipType;
+    }
+
+    public void setPrecipType(String precipType) {
+        this.precipType = precipType;
+    }
+
+    public String getPrecipProbability() {
+        return precipProbability;
+    }
+
+    public void setPrecipProbability(String precipProbability) {
+        this.precipProbability = precipProbability;
+    }
+
+    public String getTemperatureHigh() {
+        return temperatureHigh;
+    }
+
+    public void setTemperatureHigh(String temperatureHigh) {
+        this.temperatureHigh = temperatureHigh;
+    }
+
+    public String getTemperatureLow() {
+        return temperatureLow;
+    }
+
+    public void setTemperatureLow(String temperatureLow) {
+        this.temperatureLow = temperatureLow;
+    }
+
+    public String getWindBearing() {
+        return windBearing;
+    }
+
+    public void setWindBearing(String windBearing) {
+        this.windBearing = windBearing;
+    }
+
+    public String getPressure() {
+        return pressure;
+    }
+
+    public void setPressure(String pressure) {
+        this.pressure = pressure;
+    }
+
+    public String getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(String visibility) {
+        this.visibility = visibility;
+    }
+
+    public String getMoonPhase() {
+        return moonPhase;
+    }
+
+    public void setMoonPhase(String moonPhase) {
+        this.moonPhase = moonPhase;
+    }
+
+    public String getSunriseTime() {
+        return sunriseTime;
+    }
+
+    public void setSunriseTime(String sunriseTime) {
+        this.sunriseTime = sunriseTime;
+    }
+
+    public String getSunsetTime() {
+        return sunsetTime;
+    }
+
+    public void setSunsetTime(String sunsetTime) {
+        this.sunsetTime = sunsetTime;
+    }
+
+    public String getCloudCover() {
+        return cloudCover;
+    }
+
+    public void setCloudCover(String cloudCover) {
+        this.cloudCover = cloudCover;
+    }
+
+    public String getTemperatureHighTime() {
+        return temperatureHighTime;
+    }
+
+    public void setTemperatureHighTime(String temperatureHighTime) {
+        this.temperatureHighTime = temperatureHighTime;
+    }
+
+    public String getTemperatureLowTime() {
+        return temperatureLowTime;
+    }
+
+    public void setTemperatureLowTime(String temperatureLowTime) {
+        this.temperatureLowTime = temperatureLowTime;
+    }
+
+    public String getPrecipIntensityMaxTime() {
+        return precipIntensityMaxTime;
+    }
+
+    public void setPrecipIntensityMaxTime(String precipIntensityMaxTime) {
+        this.precipIntensityMaxTime = precipIntensityMaxTime;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int id){
+        this.id = id;
+    }
+
+    public String getTab(){
+        return tab;
+    }
+
+    public String getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(String time) {
         this.time = time;
+    }
+
+    public void setTab(String tab){
+        this.tab = tab;
+    }
+
+    public Data(int id, String tab, String summary, String humidity, String dewPoint, String windSpeed, String precipType, String precipProbability, String temperatureHigh, String temperatureLow, String windBearing, String pressure, String visibility, String moonPhase, String sunriseTime, String sunsetTime, String cloudCover, String temperatureHighTime, String temperatureLowTime, String precipIntensityMaxTime) {
+        this.id = id;
+        this.tab = tab;
+        this.summary = summary;
+        this.humidity = humidity;
+        this.dewPoint = dewPoint;
+        this.windSpeed = windSpeed;
+        this.precipType = precipType;
+        this.precipProbability = precipProbability;
+        this.temperatureHigh = temperatureHigh;
+        this.temperatureLow = temperatureLow;
+        this.windBearing = windBearing;
+        this.pressure = pressure;
+        this.visibility = visibility;
+        this.moonPhase = moonPhase;
+        this.sunriseTime = sunriseTime;
+        this.sunsetTime = sunsetTime;
+        this.cloudCover = cloudCover;
+        this.temperatureHighTime = temperatureHighTime;
+        this.temperatureLowTime = temperatureLowTime;
+        this.precipIntensityMaxTime = precipIntensityMaxTime;
+    }
+
+    public Data(Data dailyWeatherData1) {
+        this.id = dailyWeatherData1.id;
+        this.tab = dailyWeatherData1.tab;
+        this.summary = dailyWeatherData1.summary;
+        this.humidity = dailyWeatherData1.humidity;
+        this.dewPoint = dailyWeatherData1.dewPoint;
+        this.windSpeed = dailyWeatherData1.windSpeed;
+        this.precipType = dailyWeatherData1.precipType;
+        this.precipProbability = dailyWeatherData1.precipProbability;
+        this.temperatureHigh = dailyWeatherData1.temperatureHigh;
+        this.temperatureLow = dailyWeatherData1.temperatureLow;
+        this.windBearing = dailyWeatherData1.windBearing;
+        this.pressure = dailyWeatherData1.pressure;
+        this.visibility = dailyWeatherData1.visibility;
+        this.moonPhase = dailyWeatherData1.moonPhase;
+        this.sunriseTime = dailyWeatherData1.sunriseTime;
+        this.sunsetTime = dailyWeatherData1.sunsetTime;
+        this.cloudCover = dailyWeatherData1.cloudCover;
+        this.temperatureHighTime = dailyWeatherData1.temperatureHighTime;
+        this.temperatureLowTime = dailyWeatherData1.temperatureLowTime;
+        this.precipIntensityMaxTime = dailyWeatherData1.precipIntensityMaxTime;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(obj == null){
+            return false;
+        }
+
+        if(getClass() != obj.getClass()){
+            return false;
+        }
+
+        Data data =(Data) obj;
+        return data.getId() == getId() && data.getTab().equals(getTab()) && data.getCloudCover().equals(getCloudCover())
+                && data.getDewPoint().equals(getDewPoint()) && data.getHumidity().equals(getHumidity()) &&
+                data.getMoonPhase().equals(getMoonPhase()) && data.getPrecipIntensityMaxTime().equals(getPrecipIntensityMaxTime())
+                && data.getPrecipProbability().equals(getPrecipProbability()) && data.getPrecipType().equals(getPrecipType())
+                && data.getPressure().equals(getPressure()) && data.getSummary().equals(getSummary()) &&
+                data.getTemperatureLow().equals(getTemperatureLow()) && data.getTemperatureHigh().equals(getTemperatureHigh())
+                && data.getTemperatureHighTime().equals(getTemperatureHighTime()) && data.getTemperatureLowTime().equals(getTemperatureLow())
+                && data.getSunriseTime().equals(getSunriseTime()) &&  data.getVisibility().equals(getVisibility()) &&
+                data.getWindBearing().equals(getWindBearing()) && data.getWindSpeed().equals(getWindSpeed())
+                && data.getSunsetTime().equals(getSunsetTime());
     }
 }

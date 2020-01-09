@@ -5,8 +5,8 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.android.topviewdarksky.entities.CurrentWeather;
-import com.example.android.topviewdarksky.entities.DailyWeatherData;
+import com.example.android.topviewdarksky.models.Currently;
+import com.example.android.topviewdarksky.models.Data;
 
 import java.util.List;
 
@@ -17,22 +17,22 @@ import io.reactivex.Single;
 public interface WeatherDAO{
 
     @Query("SELECT * FROM currentWeatherTable")
-    LiveData<CurrentWeather> getAllCurrentData();
+    LiveData<Currently> getAllCurrentData();
 
     @Query("SELECT COUNT(humidity) FROM currentWeatherTable")
     LiveData<Integer> getRowCount();
 
     @Insert
-    Single<Long> addCurrentData(CurrentWeather weather);
+    Single<Long> addCurrentData(Currently weather);
 
     @Query("DELETE FROM currentWeatherTable")
     Single<Integer> removeAllCurrentData();
 
     @Query("SELECT * FROM dailyWeatherTable")
-    LiveData<List<DailyWeatherData>> getAllDailyData();
+    LiveData<List<Data>> getAllDailyData();
 
     @Insert
-    Single<Long> addDailyData(DailyWeatherData weather);
+    Single<Long> addDailyData(Data weather);
 
     @Query("DELETE FROM dailyWeatherTable")
     Single<Integer> removeAllDailyData();
