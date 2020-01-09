@@ -1,26 +1,20 @@
 package com.example.android.topviewdarksky.networking;
 
+import android.database.Observable;
+
 import com.example.android.topviewdarksky.models.Weather;
 
 import io.reactivex.Flowable;
+import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 
 public interface WeatherApi {
 
-    @GET("{key}/{latitude},{longitude},{time}")
-    Flowable<Weather> getFutureWeather(
-            @Path("key") String key,
-            @Path("latitude") Double latitude,
-            @Path("longitude") Double longitude,
-            @Path("time") String time
-    );
-
-    @GET("{key}/{latitude},{longitude}")
-    Flowable<Weather> getCurrentWeather(
-            @Path("key") String key,
-            @Path("latitude") Double latitude,
-            @Path("longitude") Double longitude
+    @GET("{lat},{lon}")
+    Observable<Response<Weather>> getWeather(
+            @Path("lat") double lat,
+            @Path("lon") double lon
     );
 }

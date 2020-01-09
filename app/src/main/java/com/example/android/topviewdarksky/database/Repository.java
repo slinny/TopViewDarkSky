@@ -40,17 +40,11 @@ public class Repository {
         this.weatherAPI = weatherAPI;
     }
 
-    public LiveData<Weather> currentAPICall(String key, Double latitude, Double longitude){
-        return LiveDataReactiveStreams.fromPublisher(
-                weatherAPI.getCurrentWeather(key,latitude, longitude).subscribeOn(Schedulers.io())
-        );
-    }
-
-    public LiveData<Weather> futureAPICall(String key, Double latitude, Double longitude, String time){
-        return LiveDataReactiveStreams.fromPublisher(
-                weatherAPI.getFutureWeather(key,latitude, longitude, time).subscribeOn(Schedulers.io())
-        );
-    }
+//    public LiveData<Weather> currentAPICall(String key, Double latitude, Double longitude){
+//        return LiveDataReactiveStreams.fromPublisher(
+//                weatherAPI.getWeather(key,latitude, longitude).subscribeOn(Schedulers.io())
+//        );
+//    }
 
     public Flowable<Resource<Integer>> insertCurrentData(Currently currentWeather){
         return weatherDAO.addCurrentData(currentWeather)
