@@ -20,21 +20,21 @@ public class WeatherViewModel extends ViewModel {
     private Repository repository;
     private LiveData<Currently> allCurrentData;
     private LiveData<List<Data>> allDailyData;
+//
+//    @Inject
+//    public WeatherViewModel(Repository repository) {
+//        this.repository = repository;
+//        allCurrentData = this.repository.getAllCurrentData();
+//        allDailyData = this.repository.getAllDailyData();
+//    }
 
-    @Inject
-    public WeatherViewModel(Repository repository) {
-        this.repository = repository;
-        allCurrentData = this.repository.getAllCurrentData();
-        allDailyData = this.repository.getAllDailyData();
-    }
-
-    public LiveData<Weather> currentAPICall(String key, Double latitude, Double longitude){
-        return repository.currentAPICall(key, latitude,longitude);
-    }
-
-    public LiveData<Weather> futureAPICall(String key, Double latitude, Double longitude, String time){
-        return repository.futureAPICall(key,latitude,longitude,time);
-    }
+//    public LiveData<Weather> currentAPICall(String key, Double latitude, Double longitude){
+//        return repository.currentAPICall(key, latitude,longitude);
+//    }
+//
+//    public LiveData<Weather> futureAPICall(String key, Double latitude, Double longitude, String time){
+//        return repository.futureAPICall(key,latitude,longitude,time);
+//    }
 
     public Flowable<Resource<Integer>> addCurrentWeather(Currently currentWeather){
         return repository.insertCurrentData(currentWeather);
