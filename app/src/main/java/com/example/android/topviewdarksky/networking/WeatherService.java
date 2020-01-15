@@ -10,7 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 
-public interface WeatherApi {
+public interface WeatherService {
 
     @GET("{lat},{lon}")
     Observable<Response<Weather>> getWeather(

@@ -3,7 +3,9 @@ package com.example.android.topviewdarksky.database;
 import java.util.concurrent.TimeUnit;
 
 import com.example.android.topviewdarksky.BuildConfig;
-import com.example.android.topviewdarksky.networking.WeatherApi;
+import com.example.android.topviewdarksky.networking.WeatherService;
+
+import retrofit2.Retrofit;
 
 public class Repository {
 
@@ -13,8 +15,11 @@ public class Repository {
     public static int counter = 0;
     public static Boolean noWifi = true;
     private WeatherDAO weatherDAO;
-    private WeatherApi weatherAPI;
+    private WeatherService weatherService;
 
-    private final String API_KEY = BuildConfig.ApiKey;
+
+
+
+
 
 }
