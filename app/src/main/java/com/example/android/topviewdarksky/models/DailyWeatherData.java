@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 
 @Entity(tableName = "dailyWeatherTable")
-public class Data {
+public class DailyWeatherData {
 
     @PrimaryKey(autoGenerate = true)
     private int id = 0;
@@ -239,7 +239,7 @@ public class Data {
         this.tab = tab;
     }
 
-    public Data(int id, String tab, String summary, String humidity, String dewPoint, String windSpeed, String precipType, String precipProbability, String temperatureHigh, String temperatureLow, String windBearing, String pressure, String visibility, String moonPhase, String sunriseTime, String sunsetTime, String cloudCover, String temperatureHighTime, String temperatureLowTime, String precipIntensityMaxTime) {
+    public DailyWeatherData(int id, String tab, String summary, String humidity, String dewPoint, String windSpeed, String precipType, String precipProbability, String temperatureHigh, String temperatureLow, String windBearing, String pressure, String visibility, String moonPhase, String sunriseTime, String sunsetTime, String cloudCover, String temperatureHighTime, String temperatureLowTime, String precipIntensityMaxTime) {
         this.id = id;
         this.tab = tab;
         this.summary = summary;
@@ -262,7 +262,7 @@ public class Data {
         this.precipIntensityMaxTime = precipIntensityMaxTime;
     }
 
-    public Data(Data dailyWeatherData1) {
+    public DailyWeatherData(DailyWeatherData dailyWeatherData1) {
         this.id = dailyWeatherData1.id;
         this.tab = dailyWeatherData1.tab;
         this.summary = dailyWeatherData1.summary;
@@ -295,7 +295,7 @@ public class Data {
             return false;
         }
 
-        Data data =(Data) obj;
+        DailyWeatherData data =(DailyWeatherData) obj;
         return data.getId() == getId() && data.getTab().equals(getTab()) && data.getCloudCover().equals(getCloudCover())
                 && data.getDewPoint().equals(getDewPoint()) && data.getHumidity().equals(getHumidity()) &&
                 data.getMoonPhase().equals(getMoonPhase()) && data.getPrecipIntensityMaxTime().equals(getPrecipIntensityMaxTime())

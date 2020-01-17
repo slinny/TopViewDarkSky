@@ -1,12 +1,13 @@
 package com.example.android.topviewdarksky.database;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.android.topviewdarksky.models.Currently;
-import com.example.android.topviewdarksky.models.Data;
+import com.example.android.topviewdarksky.models.DailyWeatherData;
+import com.example.android.topviewdarksky.models.CurrentWeather;
 
 import java.util.List;
 
@@ -17,24 +18,35 @@ import io.reactivex.Single;
 public interface WeatherDAO{
 
     @Query("SELECT * FROM currentWeatherTable")
-    LiveData<Currently> getAllCurrentData();
+    CurrentWeather getAllCurrentData();
 
-    @Query("SELECT COUNT(humidity) FROM currentWeatherTable")
-    LiveData<Integer> getRowCount();
+//    @Query("SELECT COUNT(humidity) FROM currentWeatherTable")
+//    LiveData<Integer> getRowCount();
 
     @Insert
-    Single<Long> addCurrentData(Currently weather);
+    Single<Long> addCurrentData(CurrentWeather weather);
+
+//    @Insert
+//    LiveData<CurrentWeather> addCurrentData(CurrentWeather weather);
 
     @Query("DELETE FROM currentWeatherTable")
     Single<Integer> removeAllCurrentData();
 
+//    @Query("DELETE FROM currentWeatherTable")
+//    LiveData<CurrentWeather> removeAllCurrentData();
+
     @Query("SELECT * FROM dailyWeatherTable")
-    LiveData<List<Data>> getAllDailyData();
+    LiveData<List<DailyWeatherData>> getAllDailyData();
 
     @Insert
-    Single<Long> addDailyData(Data weather);
+    Single<Long> addDailyData(DailyWeatherData weather);
+
+//    @Insert
+//    LiveData<List<DailyWeatherData>> addDailyData(List<DailyWeatherData> dailyWeatherDataList);
 
     @Query("DELETE FROM dailyWeatherTable")
     Single<Integer> removeAllDailyData();
 
+//    @Query("DELETE FROM dailyWeatherTable")
+//    LiveData<List<DailyWeatherData>> removeAllDailyData();
 }

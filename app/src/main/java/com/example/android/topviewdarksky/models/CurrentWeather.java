@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 
 @Entity(tableName = "currentWeatherTable")
-public class Currently {
+public class CurrentWeather {
 
     @PrimaryKey(autoGenerate = true)
     private int id = 0;
@@ -110,7 +110,7 @@ public class Currently {
         this.apparentTemp = apparentTemp;
     }
 
-    public Currently(int id, String summary, String humidity, String windSpeed, String temperature, String apparentTemp) {
+    public CurrentWeather(int id, String summary, String humidity, String windSpeed, String temperature, String apparentTemp) {
         this.id = id;
         this.temperature = temperature;
         this.apparentTemp = apparentTemp;
@@ -119,7 +119,7 @@ public class Currently {
         this.windSpeed = windSpeed;
     }
 
-    public Currently(Currently currentWeather){
+    public CurrentWeather(CurrentWeather currentWeather){
         this.apparentTemp = currentWeather.apparentTemp;
         this.temperature = currentWeather.temperature;
         this.humidity = currentWeather.humidity;
@@ -138,9 +138,10 @@ public class Currently {
             return false;
         }
 
-        Currently data =(Currently) obj;
+        CurrentWeather data =(CurrentWeather) obj;
         return data.getId() == getId() && data.getWindSpeed().equals(getWindSpeed()) && data.getSummary().equals(getSummary())
                 && data.getTemperature().equals(getTemperature()) && data.getApparentTemp().equals(getApparentTemp())
                 && data.getHumidity().equals(getHumidity());
     }
 }
+

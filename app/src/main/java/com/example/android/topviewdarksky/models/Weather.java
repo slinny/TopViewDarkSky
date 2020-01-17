@@ -1,5 +1,6 @@
 package com.example.android.topviewdarksky.models;
 
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -10,10 +11,10 @@ public class Weather implements Serializable {
     private String timezone = "";
 
     @SerializedName("daily")
-    private Daily dailyWeather = null;
+    private DailyWeather dailyWeather = null;
 
     @SerializedName("currently")
-    private Currently currentWeather = null;
+    private CurrentWeather currentWeather = null;
 
     public String getTimezone(){
         return timezone;
@@ -23,20 +24,20 @@ public class Weather implements Serializable {
         this.timezone = timezone;
     }
 
-    public Daily getDailyWeather(){
+    public DailyWeather getDailyWeather(){
         return dailyWeather;
     }
 
 
-    public void setDailyWeather(Daily dailyWeather){
+    public void setDailyWeather(DailyWeather dailyWeather){
         this.dailyWeather = dailyWeather;
     }
 
-    public Currently getCurrentWeather(){
+    public CurrentWeather getCurrentWeather(){
         return currentWeather;
     }
 
-    public void setCurrentWeather(Currently currentWeather){
+    public void setCurrentWeather(CurrentWeather currentWeather){
         this.currentWeather = currentWeather;
     }
 

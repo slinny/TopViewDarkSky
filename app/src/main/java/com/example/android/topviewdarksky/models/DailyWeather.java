@@ -4,16 +4,16 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Daily {
+public class DailyWeather {
 
     @SerializedName("data")
-    List<Data> data = null;
+    List<DailyWeatherData> data = null;
 
-    public List<Data> getData() {
+    public List<DailyWeatherData> getData() {
         return data;
     }
 
-    public void setData(List<Data> data) {
+    public void setData(List<DailyWeatherData> data) {
         this.data = data;
     }
 }
