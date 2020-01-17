@@ -68,7 +68,7 @@ public class Repository {
                 if (weather != null) {
                     currentWeather = weather.getCurrentWeather();
                 }
-                WeatherDAO weatherDAO = WeatherDatabase
+                weatherDAO = WeatherDatabase
                         .getInstance(context)
                         .weatherDAO();
 
@@ -104,7 +104,7 @@ public class Repository {
                     DailyWeatherData dailyWeatherData = (DailyWeatherData) weather.getDailyWeather().getData();
                 }
 
-                WeatherDAO weatherDAO = WeatherDatabase
+                weatherDAO = WeatherDatabase
                         .getInstance(context)
                         .weatherDAO();
 
