@@ -101,7 +101,7 @@ public class Repository {
                 Weather weather = response.body();
 
                 if (weather != null) {
-                    DailyWeatherData dailyWeatherData = (DailyWeatherData) weather.getDailyWeather().getData();
+//                    DailyWeatherData dailyWeatherData = (DailyWeatherData) weather.getDailyWeather().getData();
                 }
 
                 weatherDAO = WeatherDatabase
