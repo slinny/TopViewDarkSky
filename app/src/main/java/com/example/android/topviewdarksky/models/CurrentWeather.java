@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Entity(tableName = "currentWeatherTable")
@@ -14,6 +15,17 @@ public class CurrentWeather {
 
     @SerializedName("summary")
     private String summary = "";
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    @SerializedName("icon")
+    private String icon;
 
     @SerializedName("temperature")
     private String temperature = "";
@@ -110,11 +122,12 @@ public class CurrentWeather {
         this.apparentTemp = apparentTemp;
     }
 
-    public CurrentWeather(int id, String summary, String humidity, String windSpeed, String temperature, String apparentTemp) {
+    public CurrentWeather(int id, String summary, String icon, String humidity, String windSpeed, String temperature, String apparentTemp) {
         this.id = id;
         this.temperature = temperature;
         this.apparentTemp = apparentTemp;
         this.summary = summary;
+        this.icon = icon;
         this.humidity = humidity;
         this.windSpeed = windSpeed;
     }
@@ -124,6 +137,7 @@ public class CurrentWeather {
         this.temperature = currentWeather.temperature;
         this.humidity = currentWeather.humidity;
         this.summary = currentWeather.summary;
+        this.icon = currentWeather.icon;
         this.windSpeed = currentWeather.windSpeed;
         this.id = currentWeather.id;
     }
@@ -139,7 +153,7 @@ public class CurrentWeather {
         }
 
         CurrentWeather data =(CurrentWeather) obj;
-        return data.getId() == getId() && data.getWindSpeed().equals(getWindSpeed()) && data.getSummary().equals(getSummary())
+        return data.getId() == getId() && data.getWindSpeed().equals(getWindSpeed()) && data.getSummary().equals(getSummary()) && data.getIcon().equals(getIcon())
                 && data.getTemperature().equals(getTemperature()) && data.getApparentTemp().equals(getApparentTemp())
                 && data.getHumidity().equals(getHumidity());
     }

@@ -24,14 +24,14 @@ public class WeatherViewModel extends ViewModel {
         if(currentWeatherMutableLiveData != null){
             return;
         }
-        repository = Repository.getInstance();
-        currentWeatherMutableLiveData = (MutableLiveData<CurrentWeather>) repository.addCurrentWeatherData(context);
 
         if(dailyWeatherDataList != null){
             return;
         }
+
         repository = Repository.getInstance();
-        dailyWeatherDataList = repository.addDailyWeatherData(context);
+        currentWeatherMutableLiveData = (MutableLiveData<CurrentWeather>) repository.addCurrentWeatherData(context);
+        dailyWeatherDataList = (MutableLiveData<List<DailyWeatherData>>) repository.addDailyWeatherData(context);
     }
 
     public LiveData<CurrentWeather> getCurrentWeather(){return currentWeatherMutableLiveData;}

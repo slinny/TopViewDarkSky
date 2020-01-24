@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Entity(tableName = "dailyWeatherTable")
@@ -16,6 +17,17 @@ public class DailyWeatherData {
 
     @SerializedName("summary")
     private String summary = "";
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    @SerializedName("icon")
+    private String icon;
 
     @SerializedName("humidity")
     private String humidity = "";
@@ -239,10 +251,11 @@ public class DailyWeatherData {
         this.tab = tab;
     }
 
-    public DailyWeatherData(int id, String tab, String summary, String humidity, String dewPoint, String windSpeed, String precipType, String precipProbability, String temperatureHigh, String temperatureLow, String windBearing, String pressure, String visibility, String moonPhase, String sunriseTime, String sunsetTime, String cloudCover, String temperatureHighTime, String temperatureLowTime, String precipIntensityMaxTime) {
+    public DailyWeatherData(int id, String tab, String summary, String icon, String humidity, String dewPoint, String windSpeed, String precipType, String precipProbability, String temperatureHigh, String temperatureLow, String windBearing, String pressure, String visibility, String moonPhase, String sunriseTime, String sunsetTime, String cloudCover, String temperatureHighTime, String temperatureLowTime, String precipIntensityMaxTime) {
         this.id = id;
         this.tab = tab;
         this.summary = summary;
+        this.icon = icon;
         this.humidity = humidity;
         this.dewPoint = dewPoint;
         this.windSpeed = windSpeed;
@@ -266,6 +279,7 @@ public class DailyWeatherData {
         this.id = dailyWeatherData1.id;
         this.tab = dailyWeatherData1.tab;
         this.summary = dailyWeatherData1.summary;
+        this.icon = dailyWeatherData1.icon;
         this.humidity = dailyWeatherData1.humidity;
         this.dewPoint = dailyWeatherData1.dewPoint;
         this.windSpeed = dailyWeatherData1.windSpeed;
@@ -305,6 +319,6 @@ public class DailyWeatherData {
                 && data.getTemperatureHighTime().equals(getTemperatureHighTime()) && data.getTemperatureLowTime().equals(getTemperatureLow())
                 && data.getSunriseTime().equals(getSunriseTime()) &&  data.getVisibility().equals(getVisibility()) &&
                 data.getWindBearing().equals(getWindBearing()) && data.getWindSpeed().equals(getWindSpeed())
-                && data.getSunsetTime().equals(getSunsetTime());
+                && data.getSunsetTime().equals(getSunsetTime()) && data.getIcon().equals(getIcon());
     }
 }

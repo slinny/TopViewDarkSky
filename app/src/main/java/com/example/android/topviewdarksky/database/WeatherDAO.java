@@ -39,7 +39,10 @@ public interface WeatherDAO{
     LiveData<List<DailyWeatherData>> getAllDailyData();
 
     @Insert
-    Single<Long> addDailyData(DailyWeatherData weather);
+    void insert(List<DailyWeatherData> dailyWeatherData);
+
+//    @Insert
+//    Single<Long> addDailyData(DailyWeatherData weather);
 
 //    @Insert
 //    LiveData<List<DailyWeatherData>> addDailyData(List<DailyWeatherData> dailyWeatherDataList);
