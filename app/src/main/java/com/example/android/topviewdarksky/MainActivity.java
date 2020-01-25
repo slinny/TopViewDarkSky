@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -23,8 +25,10 @@ import com.example.android.topviewdarksky.ui.WeatherViewModel;
 import com.example.android.topviewdarksky.util.GPSTracker;
 import com.example.android.topviewdarksky.util.WeatherIcons;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,18 +36,17 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<DailyWeatherData> dailyWeatherDataList = new ArrayList<>();
+    private List<DailyWeatherData> dailyWeatherDataArrayList = new ArrayList<>();
+    private CurrentWeather currentWeather;
     private WeatherAdapter weatherAdapter;
-    private ApiService apiService;
     private LinearLayoutManager linearLayoutManager;
-    public static Context context;
+    Context context;
 
     GPSTracker gps;
-    double latitude;
-    double longitude;
+    public static double latitude;
+    public static double longitude;
 
     WeatherViewModel weatherViewModel;
-
 
     ImageView currentIconImageView;
     TextView currentCityTextView;
@@ -62,8 +65,77 @@ public class MainActivity extends AppCompatActivity {
 
         dailyRecyclerView = findViewById(R.id.daily_recyclerview);
 
+        getLocation();
+        Log.d("mainlat", String.valueOf(latitude));
+
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
         weatherViewModel.init();
+        weatherViewModel.getWeatherepository().observe(this, new Observer<Weather>() {
+            @Override
+            public void onChanged(Weather weather) {
+                currentWeather = weather.getCurrentWeather();
+                List<DailyWeatherData> dailyWeatherDataList = weather.getDailyWeather().getData();
+                dailyWeatherDataArrayList.addAll(dailyWeatherDataList);
+                weatherAdapter.notifyDataSetChanged();
+            }
+        });
+
+        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        dailyRecyclerView.setLayoutManager(linearLayoutManager);
+        setCurrentIcon(currentWeather.getIcon());
+        currentTempTextView.setText(setCurrentTemp(currentWeather.getTemperature()));
+        currentCityTextView.setText(getCurrentCityName(latitude,longitude));
+
+    }
+
+    private String setCurrentTemp(String temperature) {
+        float tempInt = Float.valueOf(temperature);
+        int tempR = Math.round(tempInt);
+        String tempS = String.valueOf(tempR);
+        return tempS + " \u2109";
+    }
+
+    private void setCurrentIcon(String resource) {
+        Integer imageRsc = WeatherIcons.getIconResource(resource);
+        this.currentIconImageView.setImageResource(Integer.valueOf(imageRsc));
+    }
+
+    private String getCurrentCityName(double latitude, double longitude){
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        Address address = null;
+        try {
+            address = (Address) geocoder.getFromLocation(latitude, longitude, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String cityName = address.getAddressLine(0);
+        return cityName;
+    }
+
+    private void getLocation() {
+        gps = new GPSTracker(context);
+
+        if (gps.canGetLocation()) {
+
+            latitude = gps.getLatitude();
+            longitude = gps.getLongitude();
+            Log.d("latitude", String.valueOf(latitude));
+            Log.d("longtitude", String.valueOf(longitude));
+        } else {
+            Log.d("GPSTracker", "getLocation failed");
+        }
+    }
+
+}
+
+/*
+1. databinding
+2. database
+3. repository and viewmodel
+4. livedata
+5. dagger2
+6. rxjava
+ */
 
 //        weatherViewModel.getCurrentWeather().observe(this, new Observer<CurrentWeather>() {
 //            @Override
@@ -104,45 +176,3 @@ public class MainActivity extends AppCompatActivity {
 //                t.printStackTrace();
 //            }
 //        });
-
-        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        dailyRecyclerView.setLayoutManager(linearLayoutManager);
-
-    }
-
-    private String setCurrentTemp(String temperature) {
-        float tempInt = Float.valueOf(temperature);
-        int tempR = Math.round(tempInt);
-        String tempS = String.valueOf(tempR);
-        return tempS + " \u2109";
-    }
-
-    private void setCurrentIcon(String resource) {
-        Integer imageRsc = WeatherIcons.getIconResource(resource);
-        this.currentIconImageView.setImageResource(Integer.valueOf(imageRsc));
-    }
-
-//    private void getLocation() {
-//        gps = new GPSTracker(context);
-//
-//        if (gps.canGetLocation()) {
-//
-//            latitude = gps.getLatitude();
-//            longitude = gps.getLongitude();
-//            Log.d("latitude", String.valueOf(latitude));
-//            Log.d("longtitude", String.valueOf(longitude));
-//        } else {
-////            gps.showSettingsAlert();
-//            Log.d("GPSTracker", "getLocation failed");
-//        }
-//    }
-}
-
-/*
-1. databinding
-2. database
-3. repository and viewmodel
-4. livedata
-5. dagger2
-6. rxjava
- */

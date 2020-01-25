@@ -28,7 +28,6 @@ public class Weather implements Serializable {
         return dailyWeather;
     }
 
-
     public void setDailyWeather(DailyWeather dailyWeather){
         this.dailyWeather = dailyWeather;
     }

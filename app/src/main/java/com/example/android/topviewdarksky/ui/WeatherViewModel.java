@@ -1,6 +1,7 @@
 package com.example.android.topviewdarksky.ui;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -10,30 +11,29 @@ import com.example.android.topviewdarksky.MainActivity;
 import com.example.android.topviewdarksky.database.Repository;
 import com.example.android.topviewdarksky.models.CurrentWeather;
 import com.example.android.topviewdarksky.models.DailyWeatherData;
+import com.example.android.topviewdarksky.models.Weather;
+import com.example.android.topviewdarksky.util.GPSTracker;
 
 import java.util.List;
 
+import static com.example.android.topviewdarksky.MainActivity.latitude;
+import static com.example.android.topviewdarksky.MainActivity.longitude;
+
 public class WeatherViewModel extends ViewModel {
 
-    private MutableLiveData<CurrentWeather> currentWeatherMutableLiveData;
-    private MutableLiveData<List<DailyWeatherData>> dailyWeatherDataList;
+    private MutableLiveData<Weather> weatherMutableLiveData;
     private Repository repository;
-    private Context context;
 
-    public void init(){
-        if(currentWeatherMutableLiveData != null){
-            return;
-        }
-
-        if(dailyWeatherDataList != null){
+    public void init() {
+        if (weatherMutableLiveData != null) {
             return;
         }
 
         repository = Repository.getInstance();
-        currentWeatherMutableLiveData = (MutableLiveData<CurrentWeather>) repository.addCurrentWeatherData(context);
-        dailyWeatherDataList = (MutableLiveData<List<DailyWeatherData>>) repository.addDailyWeatherData(context);
+        weatherMutableLiveData = repository.getWeather(latitude, longitude);
     }
 
-    public LiveData<CurrentWeather> getCurrentWeather(){return currentWeatherMutableLiveData;}
-    public LiveData<List<DailyWeatherData>> getAllDailyWeather(){return dailyWeatherDataList;}
+    public LiveData<Weather> getWeatherepository() {
+        return weatherMutableLiveData;
+    }
 }
