@@ -29,6 +29,10 @@ public class Repository {
     private ApiService apiService;
     private static Repository repository;
 
+    public Repository(){
+        apiService = RetrofitCall.getAllWeather();
+    }
+
     public synchronized static Repository getInstance() {
         if (repository == null) {
             if (repository == null) {
@@ -38,26 +42,60 @@ public class Repository {
         return repository;
     }
 
-    public Repository(){
-        apiService = RetrofitCall.getAllWeather();
-    }
+//    public MutableLiveData<Weather> getWeather(Double lat, Double lon){
+//        final MutableLiveData<Weather> weatherData = new MutableLiveData<>();
+//        apiService.getWeather(lat,lon).enqueue(new Callback<Weather>() {
+//            @Override
+//            public void onResponse(Call<Weather> call,
+//                                   Response<Weather> response) {
+//                if (response.isSuccessful()){
+//                    weatherData.setValue(response.body());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Weather> call, Throwable t) {
+//                weatherData.setValue(null);
+//            }
+//        });
+//        return weatherData;
+//    }
 
-    public MutableLiveData<Weather> getWeather(Double lat, Double lon){
-        final MutableLiveData<Weather> weatherData = new MutableLiveData<>();
+    public MutableLiveData<CurrentWeather> getCurrentWeather(Double lat, Double lon){
+        final MutableLiveData<CurrentWeather> currentWeatherData = new MutableLiveData<>();
         apiService.getWeather(lat,lon).enqueue(new Callback<Weather>() {
             @Override
             public void onResponse(Call<Weather> call,
                                    Response<Weather> response) {
                 if (response.isSuccessful()){
-                    weatherData.setValue(response.body());
+                    currentWeatherData.setValue(response.body().getCurrentWeather());
                 }
             }
 
             @Override
             public void onFailure(Call<Weather> call, Throwable t) {
-                weatherData.setValue(null);
+                currentWeatherData.setValue(null);
             }
         });
-        return weatherData;
+        return currentWeatherData;
+    }
+
+    public MutableLiveData<List<DailyWeatherData>> getDailyWeather(Double lat, Double lon){
+        final MutableLiveData<List<DailyWeatherData>> dailyWeatherData = new MutableLiveData<>();
+        apiService.getWeather(lat,lon).enqueue(new Callback<Weather>() {
+            @Override
+            public void onResponse(Call<Weather> call,
+                                   Response<Weather> response) {
+                if (response.isSuccessful()){
+                    dailyWeatherData.setValue(response.body().getDailyWeather().getData());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Weather> call, Throwable t) {
+                dailyWeatherData.setValue(null);
+            }
+        });
+        return dailyWeatherData;
     }
 }

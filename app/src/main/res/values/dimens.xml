@@ -4,7 +4,7 @@
     <dimen name="current_icon_dimen">150dp</dimen>
     <dimen name="view_padding">10dp</dimen>
     <dimen name="current_temp_text_size">50sp</dimen>
-    <dimen name="current_city_text_size">20sp</dimen>
+    <dimen name="current_city_text_size">15sp</dimen>
     <dimen name="margin_dimen">20dp</dimen>
     <dimen name="item_dimen">50dp</dimen>
     <dimen name="item_padding">5dp</dimen>

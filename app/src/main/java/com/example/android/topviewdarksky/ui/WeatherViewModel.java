@@ -1,8 +1,11 @@
 package com.example.android.topviewdarksky.ui;
 
+import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -19,21 +22,22 @@ import java.util.List;
 import static com.example.android.topviewdarksky.MainActivity.latitude;
 import static com.example.android.topviewdarksky.MainActivity.longitude;
 
-public class WeatherViewModel extends ViewModel {
+public class WeatherViewModel extends AndroidViewModel {
 
-    private MutableLiveData<Weather> weatherMutableLiveData;
-    private Repository repository;
+    private LiveData<CurrentWeather> currentWeatherLiveData;
+    private LiveData<List<DailyWeatherData>> dailyWeatherLiveDataList;
 
-    public void init() {
-        if (weatherMutableLiveData != null) {
-            return;
-        }
+    public WeatherViewModel(@NonNull Application application) {
+        super(application);
 
-        repository = Repository.getInstance();
-        weatherMutableLiveData = repository.getWeather(latitude, longitude);
+        currentWeatherLiveData = Repository.getInstance().getCurrentWeather(latitude,longitude);
+        dailyWeatherLiveDataList = Repository.getInstance().getDailyWeather(latitude,longitude);
     }
 
-    public LiveData<Weather> getWeatherepository() {
-        return weatherMutableLiveData;
+    public LiveData<CurrentWeather> getCurrentWeatherLiveData() {
+        return currentWeatherLiveData;
+    }
+    public LiveData<List<DailyWeatherData>> getDailyWeatherLiveDataListWeatherLiveData() {
+        return dailyWeatherLiveDataList;
     }
 }
