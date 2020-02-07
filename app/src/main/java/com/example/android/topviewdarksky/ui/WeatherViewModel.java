@@ -1,6 +1,7 @@
 package com.example.android.topviewdarksky.ui;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -28,9 +29,11 @@ public class WeatherViewModel extends AndroidViewModel {
     }
 
     public LiveData<CurrentWeather> getCurrentWeatherLiveData() {
+//        Log.d("VMCT", currentWeatherLiveData.getValue().getTemperature().toString());
         return currentWeatherLiveData;
     }
     public LiveData<List<DailyWeatherData>> getDailyWeatherLiveDataListWeatherLiveData() {
+//        Log.d("VMDT", dailyWeatherLiveDataList.getValue().get(0).getTemperatureHigh().toString());
         return dailyWeatherLiveDataList;
     }
 }

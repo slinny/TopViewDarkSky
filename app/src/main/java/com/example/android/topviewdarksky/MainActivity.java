@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-
 public class MainActivity extends AppCompatActivity {
 
     private List<DailyWeatherData> dailyWeatherDataArrayList = new ArrayList<>();
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 //    public static double longitude;
 
     public static double latitude = 40.7128;
-    public static double longitude = 74.0060;
+    public static double longitude = -74.0060;
 
     WeatherViewModel weatherViewModel;
 
@@ -85,9 +84,6 @@ public class MainActivity extends AppCompatActivity {
                 dailyRecyclerView.setAdapter(weatherAdapter);
             }
         });
-
-
-
     }
 
     private String setCurrentTemp(String temperature) {
@@ -112,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String cityName = addresses.get(0).getAddressLine(0);
+        String cityName = addresses.get(0).getLocality();
         Log.d("mainCityName", cityName);
         return cityName;
     }

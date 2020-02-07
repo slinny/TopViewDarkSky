@@ -1,5 +1,7 @@
 package com.example.android.topviewdarksky.database;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
@@ -40,12 +42,15 @@ public class Repository {
                                    Response<Weather> response) {
                 if (response.isSuccessful()){
                     currentWeatherData.setValue(response.body().getCurrentWeather());
+                    weatherDAO.removeAllCurrentData();
+                    weatherDAO.addCurrentData(response.body().getCurrentWeather());
+                    Log.d("repCT", response.body().getCurrentWeather().getTemperature().toString());
                 }
             }
 
             @Override
             public void onFailure(Call<Weather> call, Throwable t) {
-                currentWeatherData.setValue(null);
+//                currentWeatherData.setValue(weatherDAO.getAllCurrentData());
             }
         });
         return currentWeatherData;
@@ -59,12 +64,15 @@ public class Repository {
                                    Response<Weather> response) {
                 if (response.isSuccessful()){
                     dailyWeatherData.setValue(response.body().getDailyWeather().getData());
+                    weatherDAO.removeAllDailyData();
+                    weatherDAO.insert(response.body().getDailyWeather().getData());
+                    Log.d("repDT", response.body().getDailyWeather().getData().get(0).getTemperatureHigh().toString());
                 }
             }
 
             @Override
             public void onFailure(Call<Weather> call, Throwable t) {
-                dailyWeatherData.setValue(null);
+//                dailyWeatherData.setValue((List<DailyWeatherData>) weatherDAO.getAllCurrentData());
             }
         });
         return dailyWeatherData;
