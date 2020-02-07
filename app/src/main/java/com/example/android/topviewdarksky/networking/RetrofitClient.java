@@ -1,7 +1,5 @@
 package com.example.android.topviewdarksky.networking;
 
-import java.io.File;
-
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

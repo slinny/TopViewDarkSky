@@ -2,7 +2,6 @@ package com.example.android.topviewdarksky;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,9 +16,6 @@ import android.widget.TextView;
 
 import com.example.android.topviewdarksky.models.CurrentWeather;
 import com.example.android.topviewdarksky.models.DailyWeatherData;
-import com.example.android.topviewdarksky.models.Weather;
-import com.example.android.topviewdarksky.networking.ApiService;
-import com.example.android.topviewdarksky.networking.RetrofitCall;
 import com.example.android.topviewdarksky.ui.WeatherAdapter;
 import com.example.android.topviewdarksky.ui.WeatherViewModel;
 import com.example.android.topviewdarksky.util.GPSTracker;
@@ -30,9 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -91,13 +84,6 @@ public class MainActivity extends AppCompatActivity {
                 weatherAdapter = new WeatherAdapter((ArrayList<DailyWeatherData>) dailyWeatherDataArrayList);
                 dailyRecyclerView.setAdapter(weatherAdapter);
             }
-
-//            @Override
-//            public void onChanged(CurrentWeather currentWeather) {
-//                Log.d("MainCT", currentWeather.getTemperature().toString());
-//                setCurrentIcon(currentWeather.getIcon());
-//                currentTempTextView.setText(setCurrentTemp(currentWeather.getTemperature()));
-//            }
         });
 
 

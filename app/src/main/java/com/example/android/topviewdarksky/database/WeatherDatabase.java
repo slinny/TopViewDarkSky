@@ -11,7 +11,6 @@ import com.example.android.topviewdarksky.models.CurrentWeather;
 
 import kotlin.jvm.Synchronized;
 
-//initializes sqlite database wuth the version number and entities and implements singleton instance
 @Database(entities ={CurrentWeather.class, DailyWeatherData.class}, version = 1, exportSchema = false)
 public abstract class WeatherDatabase extends RoomDatabase {
 
