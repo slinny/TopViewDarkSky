@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
+
 import com.example.android.topviewdarksky.models.CurrentWeather;
 import com.example.android.topviewdarksky.models.DailyWeatherData;
 import com.example.android.topviewdarksky.models.Weather;
@@ -21,7 +22,7 @@ public class Repository {
     private ApiService apiService;
     private static Repository repository;
 
-    public Repository(){
+    public Repository() {
         apiService = RetrofitCall.getAllWeather();
     }
 
@@ -34,47 +35,57 @@ public class Repository {
         return repository;
     }
 
-    public MutableLiveData<CurrentWeather> getCurrentWeather(Double lat, Double lon){
+    public MutableLiveData<CurrentWeather> currentAPICall(Double lat, Double lon) {
         final MutableLiveData<CurrentWeather> currentWeatherData = new MutableLiveData<>();
-        apiService.getWeather(lat,lon).enqueue(new Callback<Weather>() {
+        apiService.getWeather(lat, lon).enqueue(new Callback<Weather>() {
             @Override
             public void onResponse(Call<Weather> call,
                                    Response<Weather> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     currentWeatherData.setValue(response.body().getCurrentWeather());
-                    weatherDAO.removeAllCurrentData();
-                    weatherDAO.addCurrentData(response.body().getCurrentWeather());
-                    Log.d("repCT", response.body().getCurrentWeather().getTemperature().toString());
+//                    if (weatherDAO.getAllCurrentData().getTemperature().toString() != null) {
+//                        weatherDAO.removeAllCurrentData();
+//                    }
+//                    weatherDAO.addCurrentData(response.body().currentAPICall());
+//                    Log.d("repCT", response.body().currentAPICall().getTemperature().toString());
                 }
             }
 
             @Override
             public void onFailure(Call<Weather> call, Throwable t) {
-//                currentWeatherData.setValue(weatherDAO.getAllCurrentData());
+//                if (weatherDAO.getAllCurrentData() != null) {
+//                    currentWeatherData.setValue(weatherDAO.getAllCurrentData());
+//                }
             }
         });
         return currentWeatherData;
     }
 
-    public MutableLiveData<List<DailyWeatherData>> getDailyWeather(Double lat, Double lon){
+    public MutableLiveData<List<DailyWeatherData>> dailyAPICall(Double lat, Double lon) {
         final MutableLiveData<List<DailyWeatherData>> dailyWeatherData = new MutableLiveData<>();
-        apiService.getWeather(lat,lon).enqueue(new Callback<Weather>() {
+        apiService.getWeather(lat, lon).enqueue(new Callback<Weather>() {
             @Override
             public void onResponse(Call<Weather> call,
                                    Response<Weather> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     dailyWeatherData.setValue(response.body().getDailyWeather().getData());
-                    weatherDAO.removeAllDailyData();
-                    weatherDAO.insert(response.body().getDailyWeather().getData());
-                    Log.d("repDT", response.body().getDailyWeather().getData().get(0).getTemperatureHigh().toString());
+//                    if (weatherDAO.getAllDailyData().getValue().get(0).getTemperatureHigh().toString() != null) {
+//                        weatherDAO.removeAllDailyData();
+//                    }
+//                    weatherDAO.insert(response.body().dailyAPICall().getData());
+//                    Log.d("repDT", response.body().dailyAPICall().getData().get(0).getTemperatureHigh().toString());
                 }
             }
 
             @Override
             public void onFailure(Call<Weather> call, Throwable t) {
-//                dailyWeatherData.setValue((List<DailyWeatherData>) weatherDAO.getAllCurrentData());
+//                if (weatherDAO.getAllCurrentData() != null) {
+//                    dailyWeatherData.setValue((List<DailyWeatherData>) weatherDAO.getAllCurrentData());
+//                }
             }
         });
         return dailyWeatherData;
     }
+
+//    public
 }

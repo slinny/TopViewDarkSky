@@ -17,38 +17,23 @@ import io.reactivex.Single;
 public interface WeatherDAO{
 
     @Query("SELECT * FROM currentWeatherTable")
-    CurrentWeather getAllCurrentData();
+    LiveData<CurrentWeather> getAllCurrentData();
 
-//    @Query("SELECT COUNT(humidity) FROM currentWeatherTable")
-//    LiveData<Integer> getRowCount();
+    @Query("SELECT COUNT(humidity) FROM currentWeatherTable")
+    LiveData<Integer> getRowCount();
 
     @Insert
     Single<Long> addCurrentData(CurrentWeather weather);
 
-//    @Insert
-//    LiveData<CurrentWeather> addCurrentData(CurrentWeather weather);
-
     @Query("DELETE FROM currentWeatherTable")
     Single<Integer> removeAllCurrentData();
-
-//    @Query("DELETE FROM currentWeatherTable")
-//    LiveData<CurrentWeather> removeAllCurrentData();
 
     @Query("SELECT * FROM dailyWeatherTable")
     LiveData<List<DailyWeatherData>> getAllDailyData();
 
     @Insert
-    void insert(List<DailyWeatherData> dailyWeatherData);
-
-//    @Insert
-//    Single<Long> addDailyData(DailyWeatherData weather);
-
-//    @Insert
-//    LiveData<List<DailyWeatherData>> addDailyData(List<DailyWeatherData> dailyWeatherDataList);
+    Single<Long> addDailyData(DailyWeatherData weather);
 
     @Query("DELETE FROM dailyWeatherTable")
     Single<Integer> removeAllDailyData();
-
-//    @Query("DELETE FROM dailyWeatherTable")
-//    LiveData<List<DailyWeatherData>> removeAllDailyData();
 }
