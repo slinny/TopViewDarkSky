@@ -1,6 +1,7 @@
 package com.example.android.topviewdarksky.database;
 
 import android.app.Application;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -57,7 +58,8 @@ public class Repository {
                     CurrentWeather currentWeather = response.body().getCurrentWeather();
                     Log.d("repCT", response.body().getCurrentWeather().getTemperature().toString());
                     currentWeatherData.setValue(response.body().getCurrentWeather());
-                    weatherDAO.addCurrentData(currentWeather);
+                    new insertAsyncTask(weatherDAO).execute(currentWeather);
+//                    weatherDAO.addCurrentData(currentWeather);
 //                    Log.d("repDaoCT", weatherDAO.getAllCurrentData().getTemperature().toString());
 //                    try {
 //                        if (weatherDAO.getAllCurrentData().getValue().getTemperature().toString() != null) {
@@ -85,6 +87,21 @@ public class Repository {
             }
         });
         return currentWeatherData;
+    }
+
+    private static class insertAsyncTask extends AsyncTask<CurrentWeather, Void, Void> {
+
+        private WeatherDAO mAsyncTaskDao;
+
+        insertAsyncTask(WeatherDAO weatherDAO1) {
+            mAsyncTaskDao = weatherDAO1;
+        }
+
+        @Override
+        protected Void doInBackground(final CurrentWeather... params) {
+            mAsyncTaskDao.addCurrentData(params[0]);
+            return null;
+        }
     }
 
     public MutableLiveData<List<DailyWeatherData>> dailyAPICall(Double lat, Double lon) {
@@ -130,4 +147,6 @@ public class Repository {
         });
         return dailyWeatherData;
     }
+
+
 }
