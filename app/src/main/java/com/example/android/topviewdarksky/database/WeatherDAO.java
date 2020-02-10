@@ -3,6 +3,7 @@ package com.example.android.topviewdarksky.database;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.example.android.topviewdarksky.models.DailyWeatherData;
@@ -17,12 +18,9 @@ import io.reactivex.Single;
 public interface WeatherDAO{
 
     @Query("SELECT * FROM currentWeatherTable")
-    LiveData<CurrentWeather> getAllCurrentData();
+    CurrentWeather getAllCurrentData();
 
-    @Query("SELECT COUNT(humidity) FROM currentWeatherTable")
-    LiveData<Integer> getRowCount();
-
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     Single<Long> addCurrentData(CurrentWeather weather);
 
     @Query("DELETE FROM currentWeatherTable")
@@ -31,7 +29,7 @@ public interface WeatherDAO{
     @Query("SELECT * FROM dailyWeatherTable")
     LiveData<List<DailyWeatherData>> getAllDailyData();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     Single<Long> addDailyData(DailyWeatherData weather);
 
     @Query("DELETE FROM dailyWeatherTable")

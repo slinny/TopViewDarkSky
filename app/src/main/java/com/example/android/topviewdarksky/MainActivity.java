@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity  {
     private CurrentWeather currentWeather;
     private WeatherAdapter weatherAdapter;
     private LinearLayoutManager linearLayoutManager;
-    Context context;
     String currentCityName;
 
     public static double latitude;
@@ -265,6 +264,7 @@ public class MainActivity extends AppCompatActivity  {
 
 /*
 1. databinding
+2. need to add code for room database in repository
 5. dagger2
 6. rxjava
  */

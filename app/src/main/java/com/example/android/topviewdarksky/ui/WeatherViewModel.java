@@ -23,8 +23,8 @@ public class WeatherViewModel extends AndroidViewModel {
     public WeatherViewModel(@NonNull Application application) {
         super(application);
 
-        currentWeatherLiveData = Repository.getInstance().currentAPICall(latitude,longitude);
-        dailyWeatherLiveDataList = Repository.getInstance().dailyAPICall(latitude,longitude);
+        currentWeatherLiveData = Repository.getInstance(application).currentAPICall(latitude,longitude);
+        dailyWeatherLiveDataList = Repository.getInstance(application).dailyAPICall(latitude,longitude);
     }
 
     public LiveData<CurrentWeather> getCurrentWeatherLiveData() {
