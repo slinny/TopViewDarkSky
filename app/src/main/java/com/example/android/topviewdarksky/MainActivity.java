@@ -58,9 +58,8 @@ public class MainActivity extends AppCompatActivity  {
     Context context;
     String currentCityName;
 
-    public static Double latitude;
-    public static Double longitude;
-    Location location = null;
+    public static double latitude;
+    public static double longitude;
 
     WeatherViewModel weatherViewModel;
 
@@ -88,11 +87,7 @@ public class MainActivity extends AppCompatActivity  {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
 
-//        latitude = 40.7128;
-//        longitude = -74.0060;
-
-
-        if(latitude != null && longitude != null) {
+        if(latitude != 0.0 && longitude != 0.0) {
             currentCityName = getCurrentCityName(latitude, longitude);
             Log.d("mainCTN", currentCityName);
             currentCityTextView.setText(currentCityName);
@@ -102,8 +97,12 @@ public class MainActivity extends AppCompatActivity  {
         }else if(sharedPreferences.getString(CITY_NAME_KEY,null) != null){
             currentCityName = sharedPreferences.getString(CITY_NAME_KEY,null);
             currentCityTextView.setText(currentCityName);
+            latitude = 40.7128;
+            longitude = 74.0060;
         }else{
             currentCityTextView.setText(DEFAULT_CITY_NAME);
+            latitude = 40.7128;
+            longitude = 74.0060;
         }
 
 
