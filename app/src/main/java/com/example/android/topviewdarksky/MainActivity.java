@@ -1,6 +1,7 @@
 package com.example.android.topviewdarksky;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
@@ -106,24 +107,27 @@ public class MainActivity extends AppCompatActivity  {
 
 
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
-        weatherViewModel.getCurrentWeatherLiveData().observe(this, new Observer<CurrentWeather>() {
-            @Override
-            public void onChanged(CurrentWeather currentWeather) {
-                Log.d("MainCT", currentWeather.getTemperature().toString());
-                setCurrentIcon(currentWeather.getIcon());
-                currentTempTextView.setText(setCurrentTemp(currentWeather.getTemperature()));
-            }
-        });
 
-        weatherViewModel.getDailyWeatherLiveDataListWeatherLiveData().observe(this, new Observer<List<DailyWeatherData>>() {
+        weatherViewModel.currentApiCall(latitude,longitude);
+        weatherViewModel.dailyApiCall(latitude,longitude);
+
+        weatherViewModel.getDailyWeatherLiveData().observe(this, new Observer<List<DailyWeatherData>>() {
             @Override
-            public void onChanged(List<DailyWeatherData> dailyWeatherDataList) {
-                Log.d("mainDaily0", dailyWeatherDataList.get(0).getTemperatureHigh().toString());
+            public void onChanged(@Nullable final List<DailyWeatherData> dailyWeatherDataList) {
                 dailyWeatherDataArrayList = dailyWeatherDataList;
                 linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 dailyRecyclerView.setLayoutManager(linearLayoutManager);
                 weatherAdapter = new WeatherAdapter((ArrayList<DailyWeatherData>) dailyWeatherDataArrayList);
                 dailyRecyclerView.setAdapter(weatherAdapter);
+            }
+        });
+
+        weatherViewModel.getCurrentWeatherLiveData().observe(this, new Observer<CurrentWeather>() {
+            @Override
+            public void onChanged(@Nullable final CurrentWeather currentWeather) {
+                Log.d("MainCT", currentWeather.getTemperature().toString());
+                setCurrentIcon(currentWeather.getIcon());
+                currentTempTextView.setText(setCurrentTemp(currentWeather.getTemperature()));
             }
         });
     }
@@ -213,8 +217,6 @@ public class MainActivity extends AppCompatActivity  {
             longitude = mLastLocation.getLongitude();
             Log.d("mlastlat", mLastLocation.getLatitude()+"");
             Log.d("mlastlon", mLastLocation.getLongitude()+"");
-//            latTextView.setText(mLastLocation.getLatitude()+"");
-//            lonTextView.setText(mLastLocation.getLongitude()+"");
         }
     };
 

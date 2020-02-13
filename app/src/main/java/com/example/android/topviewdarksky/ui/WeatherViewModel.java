@@ -6,33 +6,55 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.android.topviewdarksky.database.Repository;
+import com.example.android.topviewdarksky.database.WeatherRepository;
 import com.example.android.topviewdarksky.models.CurrentWeather;
 import com.example.android.topviewdarksky.models.DailyWeatherData;
 
 import java.util.List;
 
-import static com.example.android.topviewdarksky.MainActivity.latitude;
-import static com.example.android.topviewdarksky.MainActivity.longitude;
-
 public class WeatherViewModel extends AndroidViewModel {
 
     private LiveData<CurrentWeather> currentWeatherLiveData;
     private LiveData<List<DailyWeatherData>> dailyWeatherLiveDataList;
+    private WeatherRepository mWeatherRepository;
 
-    public WeatherViewModel(@NonNull Application application) {
+    public WeatherViewModel(Application application) {
         super(application);
 
-        currentWeatherLiveData = Repository.getInstance(application).currentAPICall(latitude,longitude);
-        dailyWeatherLiveDataList = Repository.getInstance(application).dailyAPICall(latitude,longitude);
+        mWeatherRepository = new WeatherRepository(application);
+        currentWeatherLiveData = mWeatherRepository.getCurrentWeather();
+        dailyWeatherLiveDataList = mWeatherRepository.getDailyWeatherDataList();
     }
 
     public LiveData<CurrentWeather> getCurrentWeatherLiveData() {
-//        Log.d("VMCT", currentWeatherLiveData.getValue().getTemperature().toString());
         return currentWeatherLiveData;
     }
-    public LiveData<List<DailyWeatherData>> getDailyWeatherLiveDataListWeatherLiveData() {
-//        Log.d("VMDT", dailyWeatherLiveDataList.getValue().get(0).getTemperatureHigh().toString());
+    public LiveData<List<DailyWeatherData>> getDailyWeatherLiveData() {
         return dailyWeatherLiveDataList;
     }
+
+    public void currentApiCall(Double lat, Double lon){
+        mWeatherRepository.currentAPICall(lat,lon);
+    }
+
+    public void insertCurrent(CurrentWeather currentWeather) {
+        mWeatherRepository.insertCurrentWeather(currentWeather);
+    }
+
+    public void deleteCurrent() {
+        mWeatherRepository.deleteCurrent();
+    }
+
+    public void dailyApiCall(Double lat, Double lon){
+        mWeatherRepository.dailyAPICall(lat,lon);
+    }
+
+    public void insertDaily(DailyWeatherData dailyWeatherData) {
+        mWeatherRepository.insertAllDailyWeather(dailyWeatherData);
+    }
+
+    public void deleteDaily() {
+        mWeatherRepository.deleteDaily();
+    }
+
 }

@@ -17,24 +17,18 @@ import com.example.android.topviewdarksky.models.Weather;
 import com.example.android.topviewdarksky.networking.ApiService;
 import com.example.android.topviewdarksky.networking.RetrofitCall;
 
-import io.reactivex.Flowable;
-import io.reactivex.Single;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Repository {
+public class WeatherRepository {
 
     private WeatherDAO weatherDAO;
     private ApiService apiService;
     private LiveData<CurrentWeather> mCurrentWeather;
     private LiveData<List<DailyWeatherData>> mDailyWeatherDataList;
 
-    private static Repository repository;
-
-    public Repository(Application application) {
+    public WeatherRepository(Application application) {
         WeatherDatabase weatherDatabase = WeatherDatabase.getInstance(application);
         apiService = RetrofitCall.getAllWeather();
         weatherDAO = weatherDatabase.weatherDAO();
@@ -42,17 +36,10 @@ public class Repository {
         mDailyWeatherDataList = weatherDAO.getAllDailyData();
     }
 
-    public synchronized static Repository getInstance(Application application) {
-        if (repository == null) {
-            if (repository == null) {
-                repository = new Repository(application);
-            }
-        }
-        return repository;
-    }
+    public LiveData<CurrentWeather> getCurrentWeather(){return mCurrentWeather;}
 
-    LiveData<CurrentWeather> getCurrentWeather(){return mCurrentWeather;}
-    LiveData<List<DailyWeatherData>> getDailyWeatherDataList(){return mDailyWeatherDataList;}
+    public LiveData<List<DailyWeatherData>> getDailyWeatherDataList(){return mDailyWeatherDataList;}
+
 
     public MutableLiveData<CurrentWeather> currentAPICall(Double lat, Double lon) {
         final MutableLiveData<CurrentWeather> currentWeatherData = new MutableLiveData<>();
@@ -75,8 +62,14 @@ public class Repository {
         return currentWeatherData;
     }
 
+
+
     public void insertCurrentWeather(CurrentWeather currentWeather){
         new insertAsyncTask(weatherDAO).execute(currentWeather);
+    }
+
+    public void deleteCurrent() {
+        new deleteAllCurrentAsyncTask(weatherDAO).execute();
     }
 
     private static class insertAsyncTask extends AsyncTask<CurrentWeather, Void, Void> {
@@ -130,6 +123,10 @@ public class Repository {
 
     public void insertAllDailyWeather(DailyWeatherData dailyWeatherData){
         new insertDailyAsyncTask(weatherDAO).execute(dailyWeatherData);
+    }
+
+    public void deleteDaily() {
+        new deleteAllDailyAsyncTask(weatherDAO).execute();
     }
 
     private static class insertDailyAsyncTask extends AsyncTask<DailyWeatherData, Void, Void> {
