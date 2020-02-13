@@ -8,8 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.room.DatabaseConfiguration;
-import androidx.room.InvalidationTracker;
-import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import java.util.List;
 
@@ -20,6 +18,7 @@ import com.example.android.topviewdarksky.networking.ApiService;
 import com.example.android.topviewdarksky.networking.RetrofitCall;
 
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
@@ -30,6 +29,8 @@ public class Repository {
 
     private WeatherDAO weatherDAO;
     private ApiService apiService;
+    private LiveData<CurrentWeather> mCurrentWeather;
+    private LiveData<List<DailyWeatherData>> mDailyWeatherDataList;
 
     private static Repository repository;
 
@@ -37,6 +38,8 @@ public class Repository {
         WeatherDatabase weatherDatabase = WeatherDatabase.getInstance(application);
         apiService = RetrofitCall.getAllWeather();
         weatherDAO = weatherDatabase.weatherDAO();
+        mCurrentWeather = weatherDAO.getAllCurrentData();
+        mDailyWeatherDataList = weatherDAO.getAllDailyData();
     }
 
     public synchronized static Repository getInstance(Application application) {
@@ -48,6 +51,9 @@ public class Repository {
         return repository;
     }
 
+    LiveData<CurrentWeather> getCurrentWeather(){return mCurrentWeather;}
+    LiveData<List<DailyWeatherData>> getDailyWeatherDataList(){return mDailyWeatherDataList;}
+
     public MutableLiveData<CurrentWeather> currentAPICall(Double lat, Double lon) {
         final MutableLiveData<CurrentWeather> currentWeatherData = new MutableLiveData<>();
         apiService.getWeather(lat, lon).enqueue(new Callback<Weather>() {
@@ -58,48 +64,47 @@ public class Repository {
                     CurrentWeather currentWeather = response.body().getCurrentWeather();
                     Log.d("repCT", response.body().getCurrentWeather().getTemperature().toString());
                     currentWeatherData.setValue(response.body().getCurrentWeather());
-                    new insertAsyncTask(weatherDAO).execute(currentWeather);
-//                    weatherDAO.addCurrentData(currentWeather);
-//                    Log.d("repDaoCT", weatherDAO.getAllCurrentData().getTemperature().toString());
-//                    try {
-//                        if (weatherDAO.getAllCurrentData().getValue().getTemperature().toString() != null) {
-//                            weatherDAO.removeAllCurrentData();
-//                            weatherDAO.addCurrentData(currentWeather);
-//                            Log.d("repCT", currentWeather.getTemperature().toString());
-//                        } else {
-//                            weatherDAO.addCurrentData(response.body().getCurrentWeather());
-//                        }
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
                 }
             }
 
             @Override
             public void onFailure(Call<Weather> call, Throwable t) {
-                try {
-                    if (weatherDAO.getAllCurrentData().getTemperature().toString() != null) {
-                        currentWeatherData.setValue(weatherDAO.getAllCurrentData());
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+
             }
         });
         return currentWeatherData;
     }
 
+    public void insertCurrentWeather(CurrentWeather currentWeather){
+        new insertAsyncTask(weatherDAO).execute(currentWeather);
+    }
+
     private static class insertAsyncTask extends AsyncTask<CurrentWeather, Void, Void> {
 
-        private WeatherDAO mAsyncTaskDao;
+        private WeatherDAO mAsyncTaskCurrentDao;
 
-        insertAsyncTask(WeatherDAO weatherDAO1) {
-            mAsyncTaskDao = weatherDAO1;
+        insertAsyncTask(WeatherDAO dao) {
+            mAsyncTaskCurrentDao = dao;
         }
 
         @Override
         protected Void doInBackground(final CurrentWeather... params) {
-            mAsyncTaskDao.addCurrentData(params[0]);
+            mAsyncTaskCurrentDao.addCurrentData(params[0]);
+            return null;
+        }
+    }
+
+    private static class deleteAllCurrentAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        private WeatherDAO mAsyncTaskCurrentDao;
+
+        deleteAllCurrentAsyncTask(WeatherDAO dao) {
+            mAsyncTaskCurrentDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mAsyncTaskCurrentDao.removeAllCurrentData();
             return null;
         }
     }
@@ -112,40 +117,49 @@ public class Repository {
                                    Response<Weather> response) {
                 if (response.isSuccessful()) {
                     dailyWeatherData.setValue(response.body().getDailyWeather().getData());
-                    int dailyNumber = response.body().getDailyWeather().getData().size();
-                    for (int i = 0; i < dailyNumber; i++) {
-                        weatherDAO.addDailyData(response.body().getDailyWeather().getData().get(i));
-                    }
-                    Log.d("repDT", response.body().getDailyWeather().getData().get(0).getTemperatureHigh().toString());
-//                    try {
-//                        if (weatherDAO.getAllDailyData().getValue().get(0).getTemperatureHigh().toString() != null) {
-//                            weatherDAO.removeAllDailyData();
-//                            int dailyNumber = response.body().getDailyWeather().getData().size();
-//                            for (int i = 0; i < dailyNumber; i++) {
-//                                weatherDAO.addDailyData(response.body().getDailyWeather().getData().get(i));
-//                            }
-//                            Log.d("repDT", response.body().getDailyWeather().getData().get(0).getTemperatureHigh().toString());
-//                        } else {
-//                            weatherDAO.addCurrentData(response.body().getCurrentWeather());
-//                        }
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
                 }
             }
 
             @Override
             public void onFailure(Call<Weather> call, Throwable t) {
-                try {
-                    if (weatherDAO.getAllDailyData().getValue().get(0).getTemperatureHigh().toString() != null) {
-                        dailyWeatherData.setValue(weatherDAO.getAllDailyData().getValue());
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+
             }
         });
         return dailyWeatherData;
+    }
+
+    public void insertAllDailyWeather(DailyWeatherData dailyWeatherData){
+        new insertDailyAsyncTask(weatherDAO).execute(dailyWeatherData);
+    }
+
+    private static class insertDailyAsyncTask extends AsyncTask<DailyWeatherData, Void, Void> {
+
+        private WeatherDAO mAsyncTaskDailyDao;
+
+        insertDailyAsyncTask(WeatherDAO dao) {
+            mAsyncTaskDailyDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final DailyWeatherData... params) {
+            mAsyncTaskDailyDao.addDailyData(params[0]);
+            return null;
+        }
+    }
+
+    private static class deleteAllDailyAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        private WeatherDAO mAsyncTaskDailyDao;
+
+        deleteAllDailyAsyncTask(WeatherDAO dao) {
+            mAsyncTaskDailyDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mAsyncTaskDailyDao.removeAllDailyData();
+            return null;
+        }
     }
 
 
