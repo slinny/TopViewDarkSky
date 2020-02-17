@@ -34,3 +34,48 @@ public class WeatherViewModel extends AndroidViewModel {
         return dailyWeatherLiveDataList;
     }
 }
+
+/*
+    private LiveData<CurrentWeather> currentWeatherLiveData;
+    private LiveData<List<DailyWeatherData>> dailyWeatherLiveDataList;
+    private WeatherRepository mWeatherRepository;
+
+    public WeatherViewModel(Application application) {
+        super(application);
+
+        mWeatherRepository = new WeatherRepository(application);
+        currentWeatherLiveData = mWeatherRepository.getCurrentWeather();
+        dailyWeatherLiveDataList = mWeatherRepository.getDailyWeatherDataList();
+    }
+
+    public LiveData<CurrentWeather> getCurrentWeatherLiveData() {
+        return currentWeatherLiveData;
+    }
+    public LiveData<List<DailyWeatherData>> getDailyWeatherLiveData() {
+        return dailyWeatherLiveDataList;
+    }
+
+    public void currentApiCall(Double lat, Double lon){
+        mWeatherRepository.currentAPICall(lat,lon);
+    }
+
+    public void insertCurrent(CurrentWeather currentWeather) {
+        mWeatherRepository.insertCurrentWeather(currentWeather);
+    }
+
+    public void deleteCurrent() {
+        mWeatherRepository.deleteCurrent();
+    }
+
+    public void dailyApiCall(Double lat, Double lon){
+        mWeatherRepository.dailyAPICall(lat,lon);
+    }
+
+    public void insertDaily(DailyWeatherData dailyWeatherData) {
+        mWeatherRepository.insertAllDailyWeather(dailyWeatherData);
+    }
+
+    public void deleteDaily() {
+        mWeatherRepository.deleteDaily();
+    }
+ */
