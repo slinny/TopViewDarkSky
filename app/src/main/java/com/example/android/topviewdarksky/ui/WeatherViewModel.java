@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.android.topviewdarksky.database.Repository;
+import com.example.android.topviewdarksky.database.WeatherRepository;
 import com.example.android.topviewdarksky.models.CurrentWeather;
 import com.example.android.topviewdarksky.models.DailyWeatherData;
 
@@ -23,8 +23,8 @@ public class WeatherViewModel extends AndroidViewModel {
     public WeatherViewModel(@NonNull Application application) {
         super(application);
 
-        currentWeatherLiveData = Repository.getInstance().getCurrentWeather(latitude,longitude);
-        dailyWeatherLiveDataList = Repository.getInstance().getDailyWeather(latitude,longitude);
+        currentWeatherLiveData = WeatherRepository.getInstance().getCurrentWeather(latitude,longitude);
+        dailyWeatherLiveDataList = WeatherRepository.getInstance().getDailyWeather(latitude,longitude);
     }
 
     public LiveData<CurrentWeather> getCurrentWeatherLiveData() {
