@@ -18,10 +18,10 @@ import io.reactivex.Single;
 public interface WeatherDAO{
 
     @Query("SELECT * FROM currentWeatherTable")
-    LiveData<CurrentWeather> getAllCurrentData();
+    LiveData<CurrentWeather> getCurrentData();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertCurrentData(CurrentWeather weather);
+    void addCurrentData(CurrentWeather weather);
 
     @Query("DELETE FROM currentWeatherTable")
     void removeAllCurrentData();
@@ -30,7 +30,7 @@ public interface WeatherDAO{
     LiveData<List<DailyWeatherData>> getAllDailyData();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertDailyData(DailyWeatherData weather);
+    void addDailyData(DailyWeatherData weather);
 
     @Query("DELETE FROM dailyWeatherTable")
     void removeAllDailyData();

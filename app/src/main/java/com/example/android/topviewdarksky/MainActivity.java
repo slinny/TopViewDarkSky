@@ -1,6 +1,8 @@
 package com.example.android.topviewdarksky;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
@@ -48,18 +50,17 @@ import static com.example.android.topviewdarksky.util.Constants.CITY_NAME_KEY;
 import static com.example.android.topviewdarksky.util.Constants.DEFAULT_CITY_NAME;
 import static com.example.android.topviewdarksky.util.Constants.SHARED_PREFS;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
+    public SharedPreferences sharedPreferences;
     private List<DailyWeatherData> dailyWeatherDataArrayList = new ArrayList<>();
     private CurrentWeather currentWeather;
     private WeatherAdapter weatherAdapter;
     private LinearLayoutManager linearLayoutManager;
-    Context context;
+    String currentCityName;
 
     public static double latitude;
     public static double longitude;
-
-    SharedPreferences sharedPreferences;
 
     WeatherViewModel weatherViewModel;
 
@@ -88,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
-        Log.d("mainOClat", String.valueOf(latitude));
 
         if(latitude != 0.0 && longitude != 0.0) {
             currentCityName = getCurrentCityName(latitude, longitude);
@@ -110,19 +110,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
-        weatherViewModel.getCurrentWeatherLiveData().observe(this, new Observer<CurrentWeather>() {
-            @Override
-            public void onChanged(CurrentWeather currentWeather) {
-                Log.d("MainCT", currentWeather.getTemperature().toString());
-                setCurrentIcon(currentWeather.getIcon());
-                currentTempTextView.setText(setCurrentTemp(currentWeather.getTemperature()));
-            }
-        });
 
-        weatherViewModel.getDailyWeatherLiveDataListWeatherLiveData().observe(this, new Observer<List<DailyWeatherData>>() {
+        weatherViewModel.getDailyWeatherLiveData().observe(this, new Observer<List<DailyWeatherData>>() {
             @Override
-            public void onChanged(List<DailyWeatherData> dailyWeatherDataList) {
-                Log.d("mainDaily0", dailyWeatherDataList.get(0).getTemperatureHigh().toString());
+            public void onChanged(@Nullable final List<DailyWeatherData> dailyWeatherDataList) {
                 dailyWeatherDataArrayList = dailyWeatherDataList;
                 linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                 dailyRecyclerView.setLayoutManager(linearLayoutManager);
@@ -130,6 +121,16 @@ public class MainActivity extends AppCompatActivity {
                 dailyRecyclerView.setAdapter(weatherAdapter);
             }
         });
+
+        weatherViewModel.getCurrentWeatherLiveData().observe(this, new Observer<CurrentWeather>() {
+            @Override
+            public void onChanged(@Nullable final CurrentWeather currentWeather) {
+                Log.d("MainCT", currentWeather.getTemperature().toString());
+                setCurrentIcon(currentWeather.getIcon());
+                currentTempTextView.setText(setCurrentTemp(currentWeather.getTemperature()));
+            }
+        });
+
     }
 
     private String setCurrentTemp(String temperature) {
@@ -190,7 +191,6 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions();
         }
     }
-
 
     @SuppressLint("MissingPermission")
     private void requestNewLocationData(){
@@ -259,13 +259,13 @@ public class MainActivity extends AppCompatActivity {
         if (checkPermissions()) {
             getLastLocation();
         }
-
     }
 
 }
 
 /*
 1. databinding
+2. need to add code for room database in repository
 5. dagger2
 6. rxjava
  */
