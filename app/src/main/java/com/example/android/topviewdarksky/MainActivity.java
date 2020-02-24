@@ -2,6 +2,7 @@ package com.example.android.topviewdarksky;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity  {
 
     WeatherViewModel weatherViewModel;
 
+    String currentCityName;
+
     ImageView currentIconImageView;
     TextView currentCityTextView;
     TextView currentTempTextView;
@@ -108,9 +111,6 @@ public class MainActivity extends AppCompatActivity  {
 
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
 
-//        weatherViewModel.currentApiCall(latitude,longitude);
-//        weatherViewModel.dailyApiCall(latitude,longitude);
-
         weatherViewModel.getDailyWeatherLiveData().observe(this, new Observer<List<DailyWeatherData>>() {
             @Override
             public void onChanged(@Nullable final List<DailyWeatherData> dailyWeatherDataList) {
@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity  {
                 currentTempTextView.setText(setCurrentTemp(currentWeather.getTemperature()));
             }
         });
+
     }
 
     private String setCurrentTemp(String temperature) {
@@ -190,7 +191,6 @@ public class MainActivity extends AppCompatActivity  {
             requestPermissions();
         }
     }
-
 
     @SuppressLint("MissingPermission")
     private void requestNewLocationData(){
@@ -259,7 +259,6 @@ public class MainActivity extends AppCompatActivity  {
         if (checkPermissions()) {
             getLastLocation();
         }
-
     }
 
 }

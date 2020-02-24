@@ -20,7 +20,7 @@ public class WeatherViewModel extends AndroidViewModel {
 
     public WeatherViewModel(Application application) {
         super(application);
-
+      
         mWeatherRepository = new WeatherRepository(application);
         currentWeatherLiveData = mWeatherRepository.getCurrentWeather();
         dailyWeatherLiveDataList = mWeatherRepository.getDailyWeatherDataList();
