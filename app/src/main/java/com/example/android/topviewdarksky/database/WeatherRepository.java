@@ -4,10 +4,8 @@ import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.room.DatabaseConfiguration;
 
 import java.util.List;
 
@@ -32,7 +30,7 @@ public class WeatherRepository {
         WeatherDatabase weatherDatabase = WeatherDatabase.getInstance(application);
         apiService = RetrofitCall.getAllWeather();
         weatherDAO = weatherDatabase.weatherDAO();
-        mCurrentWeather = weatherDAO.getAllCurrentData();
+        mCurrentWeather = weatherDAO.getCurrentData();
         mDailyWeatherDataList = weatherDAO.getAllDailyData();
     }
 
@@ -57,7 +55,8 @@ public class WeatherRepository {
 
             @Override
             public void onFailure(Call<Weather> call, Throwable t) {
-
+                currentWeatherData.setValue(weatherDAO.getCurrentData().getValue());
+                t.printStackTrace();
             }
         });
         return currentWeatherData;
@@ -120,7 +119,8 @@ public class WeatherRepository {
 
             @Override
             public void onFailure(Call<Weather> call, Throwable t) {
-
+                dailyWeatherData.setValue(weatherDAO.getAllDailyData().getValue());
+                t.printStackTrace();
             }
         });
         return dailyWeatherData;
@@ -143,8 +143,8 @@ public class WeatherRepository {
         }
 
         @Override
-        protected Void doInBackground(final DailyWeatherData... params) {
-            mAsyncTaskDailyDao.addDailyData(params[0]);
+        protected Void doInBackground(final DailyWeatherData... dailyData) {
+            mAsyncTaskDailyDao.addDailyData(dailyData[0]);
             return null;
         }
     }

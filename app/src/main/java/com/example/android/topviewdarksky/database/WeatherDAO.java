@@ -18,7 +18,7 @@ import io.reactivex.Single;
 public interface WeatherDAO{
 
     @Query("SELECT * FROM currentWeatherTable")
-    LiveData<CurrentWeather> getAllCurrentData();
+    LiveData<CurrentWeather> getCurrentData();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addCurrentData(CurrentWeather weather);
