@@ -32,29 +32,29 @@ public class WeatherViewModel extends AndroidViewModel {
     public LiveData<List<DailyWeatherData>> getDailyWeatherLiveData() {
         return dailyWeatherLiveDataList;
     }
+//
+//    public void currentApiCall(Double lat, Double lon){
+//        mWeatherRepository.currentAPICall(lat,lon);
+//    }
 
-    public void currentApiCall(Double lat, Double lon){
-        mWeatherRepository.currentAPICall(lat,lon);
-    }
-
-    public void insertCurrent(CurrentWeather currentWeather) {
-        mWeatherRepository.insertCurrentWeather(currentWeather);
-    }
-
-    public void deleteCurrent() {
-        mWeatherRepository.deleteCurrent();
-    }
-
-    public void dailyApiCall(Double lat, Double lon){
-        mWeatherRepository.dailyAPICall(lat,lon);
-    }
-
-    public void insertDaily(DailyWeatherData dailyWeatherData) {
-        mWeatherRepository.insertAllDailyWeather(dailyWeatherData);
-    }
-
-    public void deleteDaily() {
-        mWeatherRepository.deleteDaily();
-    }
+//    public void insertCurrent(CurrentWeather currentWeather) {
+//        mWeatherRepository.insertCurrentWeather(currentWeather);
+//    }
+//
+//    public void deleteCurrent() {
+//        mWeatherRepository.deleteCurrent();
+//    }
+//
+//    public void dailyApiCall(Double lat, Double lon){
+//        mWeatherRepository.dailyAPICall(lat,lon);
+//    }
+//
+//    public void insertDaily(DailyWeatherData dailyWeatherData) {
+//        mWeatherRepository.insertAllDailyWeather(dailyWeatherData);
+//    }
+//
+//    public void deleteDaily() {
+//        mWeatherRepository.deleteDaily();
+//    }
 
 }

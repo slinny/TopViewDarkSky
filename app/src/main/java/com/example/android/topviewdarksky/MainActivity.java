@@ -98,18 +98,18 @@ public class MainActivity extends AppCompatActivity  {
             currentCityName = sharedPreferences.getString(CITY_NAME_KEY,null);
             currentCityTextView.setText(currentCityName);
             latitude = 40.7128;
-            longitude = 74.0060;
+            longitude = -74.0060;
         }else{
             currentCityTextView.setText(DEFAULT_CITY_NAME);
             latitude = 40.7128;
-            longitude = 74.0060;
+            longitude = -74.0060;
         }
 
 
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
 
-        weatherViewModel.currentApiCall(latitude,longitude);
-        weatherViewModel.dailyApiCall(latitude,longitude);
+//        weatherViewModel.currentApiCall(latitude,longitude);
+//        weatherViewModel.dailyApiCall(latitude,longitude);
 
         weatherViewModel.getDailyWeatherLiveData().observe(this, new Observer<List<DailyWeatherData>>() {
             @Override

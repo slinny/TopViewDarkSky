@@ -48,9 +48,10 @@ public class WeatherRepository {
             public void onResponse(Call<Weather> call,
                                    Response<Weather> response) {
                 if (response.isSuccessful()) {
-                    CurrentWeather currentWeather = response.body().getCurrentWeather();
                     Log.d("repCT", response.body().getCurrentWeather().getTemperature().toString());
                     currentWeatherData.setValue(response.body().getCurrentWeather());
+                    CurrentWeather currentWeather = currentWeatherData.getValue();
+                    new insertAsyncTask(weatherDAO).execute(currentWeather);
                 }
             }
 
@@ -64,13 +65,13 @@ public class WeatherRepository {
 
 
 
-    public void insertCurrentWeather(CurrentWeather currentWeather){
-        new insertAsyncTask(weatherDAO).execute(currentWeather);
-    }
-
-    public void deleteCurrent() {
-        new deleteAllCurrentAsyncTask(weatherDAO).execute();
-    }
+//    public void insertCurrentWeather(CurrentWeather currentWeather){
+//        new insertAsyncTask(weatherDAO).execute(currentWeather);
+//    }
+//
+//    public void deleteCurrent() {
+//        new deleteAllCurrentAsyncTask(weatherDAO).execute();
+//    }
 
     private static class insertAsyncTask extends AsyncTask<CurrentWeather, Void, Void> {
 
@@ -87,20 +88,20 @@ public class WeatherRepository {
         }
     }
 
-    private static class deleteAllCurrentAsyncTask extends AsyncTask<Void, Void, Void> {
-
-        private WeatherDAO mAsyncTaskCurrentDao;
-
-        deleteAllCurrentAsyncTask(WeatherDAO dao) {
-            mAsyncTaskCurrentDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            mAsyncTaskCurrentDao.removeAllCurrentData();
-            return null;
-        }
-    }
+//    private static class deleteAllCurrentAsyncTask extends AsyncTask<Void, Void, Void> {
+//
+//        private WeatherDAO mAsyncTaskCurrentDao;
+//
+//        deleteAllCurrentAsyncTask(WeatherDAO dao) {
+//            mAsyncTaskCurrentDao = dao;
+//        }
+//
+//        @Override
+//        protected Void doInBackground(Void... voids) {
+//            mAsyncTaskCurrentDao.removeAllCurrentData();
+//            return null;
+//        }
+//    }
 
     public MutableLiveData<List<DailyWeatherData>> dailyAPICall(Double lat, Double lon) {
         final MutableLiveData<List<DailyWeatherData>> dailyWeatherData = new MutableLiveData<>();
@@ -110,6 +111,10 @@ public class WeatherRepository {
                                    Response<Weather> response) {
                 if (response.isSuccessful()) {
                     dailyWeatherData.setValue(response.body().getDailyWeather().getData());
+                    for (int i = 0; i < response.body().getDailyWeather().getData().size(); i++) {
+                        DailyWeatherData dailyWeatherDataTemp = dailyWeatherData.getValue().get(i);
+                        new insertDailyAsyncTask(weatherDAO).execute(dailyWeatherDataTemp);
+                    }
                 }
             }
 
@@ -121,14 +126,14 @@ public class WeatherRepository {
         return dailyWeatherData;
     }
 
-    public void insertAllDailyWeather(DailyWeatherData dailyWeatherData){
-        new insertDailyAsyncTask(weatherDAO).execute(dailyWeatherData);
-    }
-
-    public void deleteDaily() {
-        new deleteAllDailyAsyncTask(weatherDAO).execute();
-    }
-
+//    public void insertAllDailyWeather(DailyWeatherData dailyWeatherData){
+//        new insertDailyAsyncTask(weatherDAO).execute(dailyWeatherData);
+//    }
+//
+//    public void deleteDaily() {
+//        new deleteAllDailyAsyncTask(weatherDAO).execute();
+//    }
+//
     private static class insertDailyAsyncTask extends AsyncTask<DailyWeatherData, Void, Void> {
 
         private WeatherDAO mAsyncTaskDailyDao;
@@ -143,21 +148,21 @@ public class WeatherRepository {
             return null;
         }
     }
-
-    private static class deleteAllDailyAsyncTask extends AsyncTask<Void, Void, Void> {
-
-        private WeatherDAO mAsyncTaskDailyDao;
-
-        deleteAllDailyAsyncTask(WeatherDAO dao) {
-            mAsyncTaskDailyDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            mAsyncTaskDailyDao.removeAllDailyData();
-            return null;
-        }
-    }
+//
+//    private static class deleteAllDailyAsyncTask extends AsyncTask<Void, Void, Void> {
+//
+//        private WeatherDAO mAsyncTaskDailyDao;
+//
+//        deleteAllDailyAsyncTask(WeatherDAO dao) {
+//            mAsyncTaskDailyDao = dao;
+//        }
+//
+//        @Override
+//        protected Void doInBackground(Void... voids) {
+//            mAsyncTaskDailyDao.removeAllDailyData();
+//            return null;
+//        }
+//    }
 
 
 }
