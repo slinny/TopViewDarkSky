@@ -21,7 +21,7 @@ public interface WeatherDAO{
     LiveData<CurrentWeather> getCurrentData();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addCurrentData(CurrentWeather weather);
+    void insertCurrentData(CurrentWeather weather);
 
     @Query("DELETE FROM currentWeatherTable")
     void removeAllCurrentData();
@@ -30,7 +30,7 @@ public interface WeatherDAO{
     LiveData<List<DailyWeatherData>> getAllDailyData();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addDailyData(DailyWeatherData weather);
+    void insertDailyData(DailyWeatherData weather);
 
     @Query("DELETE FROM dailyWeatherTable")
     void removeAllDailyData();
