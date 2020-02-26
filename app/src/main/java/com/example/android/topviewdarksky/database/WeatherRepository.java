@@ -48,7 +48,6 @@ public class WeatherRepository {
 
     public LiveData<CurrentWeather> getCurrentWeather() {
         insertCurrentWeather(latitude,longitude);
-//        Log.d("repomCWCT", mCurrentWeather.getValue().getTemperature());
         return mCurrentWeather;
     }
     public LiveData<List<DailyWeatherData>> getDailyWeatherData() {
@@ -62,10 +61,13 @@ public class WeatherRepository {
             public void onResponse(Call<Weather> call,
                                    Response<Weather> response) {
                 if (response.isSuccessful()) {
-                    Log.d("repCT", response.body().getCurrentWeather().getTemperature().toString());
-                    CurrentWeather currentWeather = response.body().getCurrentWeather();
-                    new insertAsyncTask(weatherDAO).execute(currentWeather);
-//                    Log.d("repoRFCT", weatherDAO.getCurrentData().getValue().getTemperature()); ???
+                    try {
+                        new deleteCurrentAsyncTask(weatherDAO).execute();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    CurrentWeather currentWeatherTemp = response.body().getCurrentWeather();
+                    new insertAsyncTask(weatherDAO).execute(currentWeatherTemp);
                 }
             }
 
@@ -89,10 +91,24 @@ public class WeatherRepository {
             CurrentWeather currentWeather1 = currentWeather[0];
             Log.d("repoAscCT", currentWeather[0].getTemperature());
             mAsyncTaskCurrentDao.insertCurrentData(currentWeather1);
-//            Log.d("repoAscRCT", mAsyncTaskCurrentDao.getCurrentData().getValue().getTemperature()); insert does not work
             return null;
         }
     }
+
+    private static class deleteCurrentAsyncTask extends AsyncTask<Void, Void, Void> {
+        private WeatherDAO mAsyncTaskDao;
+
+        deleteCurrentAsyncTask(WeatherDAO dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mAsyncTaskDao.removeAllCurrentData();
+            return null;
+        }
+    }
+
 
     public void insertDailyWeatherData(Double lat, Double lon) {
         apiService.getWeather(lat, lon).enqueue(new Callback<Weather>() {
@@ -100,6 +116,7 @@ public class WeatherRepository {
             public void onResponse(Call<Weather> call,
                                    Response<Weather> response) {
                 if (response.isSuccessful()) {
+                    new deleteAllDailytAsyncTask(weatherDAO).execute();
                     for (int i = 0; i < response.body().getDailyWeather().getData().size(); i++) {
                         DailyWeatherData dailyWeatherDataTemp = response.body().getDailyWeather().getData().get(i);
                         new insertDailyAsyncTask(weatherDAO).execute(dailyWeatherDataTemp);
@@ -125,6 +142,20 @@ public class WeatherRepository {
         @Override
         protected Void doInBackground(final DailyWeatherData... dailyData) {
             mAsyncTaskDailyDao.insertDailyData(dailyData[0]);
+            return null;
+        }
+    }
+
+    private static class deleteAllDailytAsyncTask extends AsyncTask<Void, Void, Void> {
+        private WeatherDAO mAsyncTaskDao;
+
+        deleteAllDailytAsyncTask(WeatherDAO dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mAsyncTaskDao.removeAllDailyData();
             return null;
         }
     }

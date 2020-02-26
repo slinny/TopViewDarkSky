@@ -50,11 +50,11 @@ import static com.example.android.topviewdarksky.util.Constants.CITY_NAME_KEY;
 import static com.example.android.topviewdarksky.util.Constants.DEFAULT_CITY_NAME;
 import static com.example.android.topviewdarksky.util.Constants.SHARED_PREFS;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity {
 
     public SharedPreferences sharedPreferences;
     private List<DailyWeatherData> dailyWeatherDataArrayList = new ArrayList<>();
-    private CurrentWeather currentWeather;
+    private CurrentWeather mCurrentWeather;
     private WeatherAdapter weatherAdapter;
     private LinearLayoutManager linearLayoutManager;
     String currentCityName;
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sharedPreferences = getApplicationContext().getSharedPreferences(CITY_NAME_KEY,Context.MODE_PRIVATE);
+        sharedPreferences = getApplicationContext().getSharedPreferences(CITY_NAME_KEY, Context.MODE_PRIVATE);
 
         currentIconImageView = findViewById(R.id.current_icon_imageView);
         currentCityTextView = findViewById(R.id.city_textView);
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity  {
 
         dailyRecyclerView = findViewById(R.id.daily_recyclerview);
 
-        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         @SuppressLint("MissingPermission") Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         longitude = location.getLongitude();
         latitude = location.getLatitude();
@@ -116,19 +116,18 @@ public class MainActivity extends AppCompatActivity  {
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
         Log.d("moclat", latitude + "");
 
-        if(latitude != 0.0 && longitude != 0.0) {
+        if (latitude != 0.0 && longitude != 0.0) {
             currentCityName = getCurrentCityName(latitude, longitude);
-            Log.d("mainCTN", currentCityName);
             currentCityTextView.setText(currentCityName);
             sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
             SharedPreferences.Editor myEdit = sharedPreferences.edit();
-            myEdit.putString(CITY_NAME_KEY,currentCityName).apply();
-        }else if(sharedPreferences.getString(CITY_NAME_KEY,null) != null){
-            currentCityName = sharedPreferences.getString(CITY_NAME_KEY,null);
+            myEdit.putString(CITY_NAME_KEY, currentCityName).apply();
+        } else if (sharedPreferences.getString(CITY_NAME_KEY, null) != null) {
+            currentCityName = sharedPreferences.getString(CITY_NAME_KEY, null);
             currentCityTextView.setText(currentCityName);
             latitude = 40.7128;
             longitude = -74.0060;
-        }else{
+        } else {
             currentCityTextView.setText(DEFAULT_CITY_NAME);
             latitude = 40.7128;
             longitude = -74.0060;
@@ -137,12 +136,11 @@ public class MainActivity extends AppCompatActivity  {
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
 
         weatherViewModel.getCurrentWeatherLiveData().observe(this, new Observer<CurrentWeather>() {
-
             @Override
             public void onChanged(@Nullable final CurrentWeather currentWeather) {
-                Log.d("MainCT", currentWeather.getTemperature());
-                setCurrentIcon(currentWeather.getIcon());
-                currentTempTextView.setText(setCurrentTemp(currentWeather.getTemperature()));
+                mCurrentWeather = currentWeather;
+                setCurrentIcon(mCurrentWeather.getIcon());
+                currentTempTextView.setText(setCurrentTemp(mCurrentWeather.getTemperature()));
             }
         });
 
@@ -170,7 +168,7 @@ public class MainActivity extends AppCompatActivity  {
         this.currentIconImageView.setImageResource(Integer.valueOf(imageRsc));
     }
 
-    private String getCurrentCityName(double latitude, double longitude){
+    private String getCurrentCityName(double latitude, double longitude) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> addresses = null;
         try {
@@ -181,7 +179,7 @@ public class MainActivity extends AppCompatActivity  {
             e.printStackTrace();
         }
         String cityName = addresses.get(0).getLocality();
-        Log.d("mainCityName", cityName);
+//        Log.d("mainCityName", cityName);
         return cityName;
     }
 }
