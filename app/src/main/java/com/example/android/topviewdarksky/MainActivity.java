@@ -2,6 +2,7 @@ package com.example.android.topviewdarksky;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     public static double longitude;
 
     WeatherViewModel weatherViewModel;
+
+    String currentCityName;
 
     ImageView currentIconImageView;
     TextView currentCityTextView;
@@ -143,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                 currentTempTextView.setText(setCurrentTemp(mCurrentWeather.getTemperature()));
             }
         });
-
+      
         weatherViewModel.getDailyWeatherLiveData().observe(this, new Observer<List<DailyWeatherData>>() {
             @Override
             public void onChanged(@Nullable final List<DailyWeatherData> dailyWeatherDataList) {
@@ -179,13 +182,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         String cityName = addresses.get(0).getLocality();
-//        Log.d("mainCityName", cityName);
         return cityName;
     }
 }
-
-/*
-1. databinding
-5. dagger2
-6. rxjava
- */
