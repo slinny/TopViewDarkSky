@@ -65,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
     WeatherViewModel weatherViewModel;
 
-    String currentCityName;
-
     ImageView currentIconImageView;
     TextView currentCityTextView;
     TextView currentTempTextView;
