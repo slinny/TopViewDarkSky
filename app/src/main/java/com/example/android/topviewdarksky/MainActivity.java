@@ -116,22 +116,9 @@ public class MainActivity extends AppCompatActivity {
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
         Log.d("moclat", latitude + "");
 
-        if (latitude != 0.0 && longitude != 0.0) {
-            currentCityName = getCurrentCityName(latitude, longitude);
-            currentCityTextView.setText(currentCityName);
-            sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-            SharedPreferences.Editor myEdit = sharedPreferences.edit();
-            myEdit.putString(CITY_NAME_KEY, currentCityName).apply();
-        } else if (sharedPreferences.getString(CITY_NAME_KEY, null) != null) {
-            currentCityName = sharedPreferences.getString(CITY_NAME_KEY, null);
-            currentCityTextView.setText(currentCityName);
-            latitude = 40.7128;
-            longitude = -74.0060;
-        } else {
-            currentCityTextView.setText(DEFAULT_CITY_NAME);
-            latitude = 40.7128;
-            longitude = -74.0060;
-        }
+        currentCityName = getCurrentCityName(latitude, longitude);
+        currentCityTextView.setText(currentCityName);
+
 
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
 
