@@ -9,6 +9,16 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/no_network_textview"
+        android:text="NO NETWORK"
+        android:textSize="@dimen/no_network_text_size"
+        android:layout_gravity="center_horizontal"
+        android:padding="@dimen/view_padding"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/current_cardview"
         android:layout_width="match_parent"

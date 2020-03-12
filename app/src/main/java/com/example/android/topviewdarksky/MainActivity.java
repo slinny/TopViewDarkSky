@@ -24,7 +24,9 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView currentIconImageView;
     TextView currentCityTextView;
     TextView currentTempTextView;
+    TextView noNetworkTextView;
     RecyclerView dailyRecyclerView;
 
     int PERMISSION_ID = 44;
@@ -86,10 +89,16 @@ public class MainActivity extends AppCompatActivity {
 
         dailyRecyclerView = findViewById(R.id.daily_recyclerview);
 
+        noNetworkTextView = findViewById(R.id.no_network_textview);
+
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         @SuppressLint("MissingPermission") Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        longitude = location.getLongitude();
-        latitude = location.getLatitude();
+        try {
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         final LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
@@ -116,8 +125,13 @@ public class MainActivity extends AppCompatActivity {
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
         Log.d("moclat", latitude + "");
 
-        currentCityName = getCurrentCityName(latitude, longitude);
-        currentCityTextView.setText(currentCityName);
+        try {
+            currentCityName = getCurrentCityName(latitude, longitude);
+            currentCityTextView.setText(currentCityName);
+        } catch (Exception e) {
+            noNetworkTextView.setVisibility(View.VISIBLE);
+            e.printStackTrace();
+        }
 
 
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
@@ -173,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
 
 /*
 1. databinding
+2. unit and UI testing
 5. dagger2
 6. rxjava
  */
