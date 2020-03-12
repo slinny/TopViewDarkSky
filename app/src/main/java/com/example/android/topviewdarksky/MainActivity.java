@@ -2,6 +2,8 @@ package com.example.android.topviewdarksky;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingComponent;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,6 +24,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.topviewdarksky.databinding.ActivityMainBinding;
 import com.example.android.topviewdarksky.models.CurrentWeather;
 import com.example.android.topviewdarksky.models.DailyWeatherData;
 import com.example.android.topviewdarksky.ui.WeatherAdapter;
@@ -33,6 +36,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static com.example.android.topviewdarksky.R.layout.activity_main;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
     WeatherViewModel weatherViewModel;
 
+    private ActivityMainBinding binding;
+
     ImageView currentIconImageView;
     TextView currentCityTextView;
     TextView currentTempTextView;
@@ -61,15 +68,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this,activity_main);
 
-        currentIconImageView = findViewById(R.id.current_icon_imageView);
-        currentCityTextView = findViewById(R.id.city_textView);
-        currentTempTextView = findViewById(R.id.temp_textview);
+        currentIconImageView = binding.currentIconImageView;
+        currentCityTextView = binding.cityTextView;
+        currentTempTextView = binding.tempTextview;
 
-        dailyRecyclerView = findViewById(R.id.daily_recyclerview);
+        dailyRecyclerView = binding.dailyRecyclerview;
 
-        noNetworkTextView = findViewById(R.id.no_network_textview);
+        noNetworkTextView = binding.noNetworkTextview;
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         @SuppressLint("MissingPermission") Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -169,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
 }
 
 /*
-1. databinding
 2. unit and UI test
 5. dagger2
 6. rxjava

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.topviewdarksky.R;
+import com.example.android.topviewdarksky.databinding.ListItemDailyBinding;
 import com.example.android.topviewdarksky.models.DailyWeatherData;
 import com.example.android.topviewdarksky.util.TimeUtils;
 import com.example.android.topviewdarksky.util.WeatherIcons;
@@ -27,8 +28,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherV
     @NonNull
     @Override
     public WeatherAdapter.WeatherViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_daily, parent, false);
-        return new WeatherViewHolder(view);
+        ListItemDailyBinding listItemDailyBinding = ListItemDailyBinding.bind(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_daily, parent, false));
+        return new WeatherViewHolder(listItemDailyBinding);
     }
 
     @Override
@@ -51,15 +52,17 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherV
 
     public class WeatherViewHolder extends RecyclerView.ViewHolder{
 
+        public ListItemDailyBinding listItemDailyBinding;
+
         TextView dateTextView, dailyHigh, dailyLow;
         ImageView dailyIconImageView;
 
-        public WeatherViewHolder(@NonNull View itemView) {
-            super(itemView);
-            dailyIconImageView =itemView.findViewById(R.id.daily_icon_imageView);
-            dateTextView = itemView.findViewById(R.id.daily_date_textview);
-            dailyHigh = itemView.findViewById(R.id.daily_high_textView);
-            dailyLow = itemView.findViewById(R.id.daily_low_textView);
+        public WeatherViewHolder(ListItemDailyBinding listItemDailyBinding) {
+            super(listItemDailyBinding.getRoot());
+            dailyIconImageView = listItemDailyBinding.dailyIconImageView;
+            dateTextView = listItemDailyBinding.dailyDateTextview;
+            dailyHigh = listItemDailyBinding.dailyHighTextView;
+            dailyLow = listItemDailyBinding.dailyLowTextView;
 
         }
 
