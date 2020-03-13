@@ -19,7 +19,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -110,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
         };
 
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
-        Log.d("moclat", latitude + "");
 
         try {
             currentCityName = getCurrentCityName(latitude, longitude);
@@ -165,8 +163,6 @@ public class MainActivity extends AppCompatActivity {
         List<Address> addresses = null;
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            Log.d("mainlat", String.valueOf(latitude));
-
         } catch (IOException e) {
             e.printStackTrace();
         }
