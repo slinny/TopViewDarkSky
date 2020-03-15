@@ -14,6 +14,9 @@ import com.example.android.topviewdarksky.models.Weather;
 import com.example.android.topviewdarksky.networking.ApiService;
 import com.example.android.topviewdarksky.networking.RetrofitCall;
 
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,26 +59,33 @@ public class WeatherRepository {
     }
 
     public void insertCurrentWeather(Double lat, Double lon) {
-        apiService.getWeather(lat, lon).enqueue(new Callback<Weather>() {
-            @Override
-            public void onResponse(Call<Weather> call,
-                                   Response<Weather> response) {
-                if (response.isSuccessful()) {
-                    try {
-                        new deleteCurrentAsyncTask(weatherDAO).execute();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    CurrentWeather currentWeatherTemp = response.body().getCurrentWeather();
-                    new insertAsyncTask(weatherDAO).execute(currentWeatherTemp);
-                }
-            }
+//        work from here
+//        Flowable<CurrentWeather> currentWeatherFlowable = apiService.getWeather(lat,lon)
+//                .map(currentWeather->{
+//
+//                })
+//                .
 
-            @Override
-            public void onFailure(Call<Weather> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+//        apiService.getWeather(lat, lon).enqueue(new Callback<Weather>() {
+//            @Override
+//            public void onResponse(Call<Weather> call,
+//                                   Response<Weather> response) {
+//                if (response.isSuccessful()) {
+//                    try {
+//                        new deleteCurrentAsyncTask(weatherDAO).execute();
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                    CurrentWeather currentWeatherTemp = response.body().getCurrentWeather();
+//                    new insertAsyncTask(weatherDAO).execute(currentWeatherTemp);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Weather> call, Throwable t) {
+//                t.printStackTrace();
+//            }
+//        });
     }
 
     private static class insertAsyncTask extends AsyncTask<CurrentWeather, Void, Void> {
