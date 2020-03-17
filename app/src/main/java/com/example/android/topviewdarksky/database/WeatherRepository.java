@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.LiveDataReactiveStreams;
 
 import java.util.List;
 
@@ -16,7 +17,10 @@ import com.example.android.topviewdarksky.networking.RetrofitCall;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,14 +62,26 @@ public class WeatherRepository {
         return mDailyWeatherDataList;
     }
 
-    public void insertCurrentWeather(Double lat, Double lon) {
-//        work from here
-//        Flowable<CurrentWeather> currentWeatherFlowable = apiService.getWeather(lat,lon)
-//                .map(currentWeather->{
-//
-//                })
-//                .
+    public LiveData<Weather> weatherApiCall(Double lat, Double lon) {
+        return LiveDataReactiveStreams.fromPublisher(
+                apiService.getWeather(lat,lon).subscribeOn(Schedulers.io())
+        );
+    }
 
+    public void insertCurrentData(Double lat, Double lon){
+        weatherDAO.insertCurrentData(weatherApiCall(lat, lon).getValue().getCurrentWeather())
+                .map(new Function<Long, Integer>() {
+                    @Override
+                    public Integer apply(Long aLong){
+                        long l = aLong;
+                        return (int)l;
+                    }
+                })
+                .subscribeOn(Schedulers.io()).toFlowable();
+    }
+
+
+//    public void insertCurrentWeather(Double lat, Double lon) {
 //        apiService.getWeather(lat, lon).enqueue(new Callback<Weather>() {
 //            @Override
 //            public void onResponse(Call<Weather> call,
@@ -86,7 +102,7 @@ public class WeatherRepository {
 //                t.printStackTrace();
 //            }
 //        });
-    }
+//    }
 
     private static class insertAsyncTask extends AsyncTask<CurrentWeather, Void, Void> {
 

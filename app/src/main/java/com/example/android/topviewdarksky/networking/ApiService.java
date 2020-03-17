@@ -21,15 +21,15 @@ public interface ApiService {
 
     public static final String URL = BASE_URL + File.separator + SECRET_KEY + File.separator;
 
-//    @GET("{lat},{lon}")
-//    Call<Weather> getWeather(
-//            @Path("lat") double lat,
-//            @Path("lon") double lon
-//    );
-
     @GET("{lat},{lon}")
-    Flowable<Weather> getWeather(
+    Call<Weather> getWeather(
             @Path("lat") double lat,
             @Path("lon") double lon
     );
+
+//    @GET("{lat},{lon}")
+//    Flowable<Weather> getWeather(
+//            @Path("lat") double lat,
+//            @Path("lon") double lon
+//    );
 }
