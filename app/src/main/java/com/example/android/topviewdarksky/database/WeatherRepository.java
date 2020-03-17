@@ -145,7 +145,7 @@ public class WeatherRepository {
             return null;
         }
     }
-
+  
     private static class deleteAllDailytAsyncTask extends AsyncTask<Void, Void, Void> {
         private WeatherDAO mAsyncTaskDao;
 

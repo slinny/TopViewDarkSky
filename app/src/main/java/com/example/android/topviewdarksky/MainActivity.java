@@ -1,6 +1,7 @@
 package com.example.android.topviewdarksky;
 
 import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingComponent;
 import androidx.databinding.DataBindingUtil;
@@ -133,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+      
         weatherViewModel.getDailyWeatherLiveData().observe(this, new Observer<List<DailyWeatherData>>() {
             @Override
             public void onChanged(@Nullable final List<DailyWeatherData> dailyWeatherDataList) {
@@ -170,9 +171,3 @@ public class MainActivity extends AppCompatActivity {
         return cityName;
     }
 }
-
-/*
-2. unit and UI test
-5. dagger2
-6. rxjava
- */
