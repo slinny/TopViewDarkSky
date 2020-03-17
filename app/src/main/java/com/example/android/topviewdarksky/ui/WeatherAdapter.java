@@ -1,66 +1,72 @@
 package com.example.android.topviewdarksky.ui;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.topviewdarksky.R;
+import com.example.android.topviewdarksky.databinding.ListItemDailyBinding;
 import com.example.android.topviewdarksky.models.DailyWeatherData;
 import com.example.android.topviewdarksky.util.TimeUtils;
 import com.example.android.topviewdarksky.util.WeatherIcons;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder> {
 
-    ArrayList<DailyWeatherData> dailyWeatherDataArrayList;
+    private List<DailyWeatherData> dailyWeatherDataList;
 
-    public WeatherAdapter(ArrayList<DailyWeatherData> dailyWeatherDataArrayList) {
-        this.dailyWeatherDataArrayList = dailyWeatherDataArrayList;
+    public WeatherAdapter(List<DailyWeatherData> dailyWeatherDataList) {
+        this.dailyWeatherDataList = dailyWeatherDataList;
     }
 
     @NonNull
     @Override
     public WeatherAdapter.WeatherViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_daily, parent, false);
-        return new WeatherViewHolder(view);
+        ListItemDailyBinding listItemDailyBinding = ListItemDailyBinding.bind(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_daily, parent, false));
+        return new WeatherViewHolder(listItemDailyBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull WeatherAdapter.WeatherViewHolder holder, int position) {
-        DailyWeatherData dailyData = dailyWeatherDataArrayList.get(position);
-
+        DailyWeatherData dailyData = dailyWeatherDataList.get(position);
+        holder.bind(dailyData);
         holder.setIcon(dailyData.getIcon());
-
         String day = TimeUtils.getDayOfWeek(dailyData.getTime().toString());
         holder.dateTextView.setText(day);
         holder.dailyHigh.setText(setTemp(dailyData.getTemperatureHigh()));
         holder.dailyLow.setText(setTemp(dailyData.getTemperatureLow()));
-
     }
 
     @Override
     public int getItemCount() {
-        return dailyWeatherDataArrayList.size();
+        return dailyWeatherDataList.size();
     }
 
     public class WeatherViewHolder extends RecyclerView.ViewHolder{
 
+        public ListItemDailyBinding listItemDailyBinding;
+
         TextView dateTextView, dailyHigh, dailyLow;
         ImageView dailyIconImageView;
 
-        public WeatherViewHolder(@NonNull View itemView) {
-            super(itemView);
-            dailyIconImageView =itemView.findViewById(R.id.daily_icon_imageView);
-            dateTextView = itemView.findViewById(R.id.daily_date_textview);
-            dailyHigh = itemView.findViewById(R.id.daily_high_textView);
-            dailyLow = itemView.findViewById(R.id.daily_low_textView);
+        public WeatherViewHolder(ListItemDailyBinding listItemDailyBinding) {
+            super(listItemDailyBinding.getRoot());
+            this.listItemDailyBinding = listItemDailyBinding;
+            dailyIconImageView = listItemDailyBinding.dailyIconImageView;
+            dateTextView = listItemDailyBinding.dailyDateTextview;
+            dailyHigh = listItemDailyBinding.dailyHighTextView;
+            dailyLow = listItemDailyBinding.dailyLowTextView;
+        }
 
+        public void bind(Object obj) {
+            listItemDailyBinding.setVariable(BR.dailyWeatherData, obj);
+            listItemDailyBinding.executePendingBindings();
         }
 
         public void setWeekday(String weekday) {

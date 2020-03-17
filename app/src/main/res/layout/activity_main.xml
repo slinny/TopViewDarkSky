@@ -1,72 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/current_cardview"
+    <data>
+        <variable
+            name="currentWeather"
+            type="com.example.android.topviewdarksky.models.CurrentWeather" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/current_dimen"
-        android:padding="@dimen/view_padding">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/current_layout"
+        <TextView
+            android:id="@+id/no_network_textview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:padding="@dimen/view_padding"
+            android:text="NO NETWORK"
+            android:textSize="@dimen/no_network_text_size"
+            android:visibility="gone" />
 
-            <ImageView
-                android:id="@+id/current_icon_imageView"
-                android:layout_width="@dimen/current_icon_dimen"
-                android:layout_height="@dimen/current_icon_dimen"
-                android:contentDescription="weather icon"
-                android:padding="@dimen/view_padding"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/temp_textview"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/current_cardview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/current_dimen"
+            android:padding="@dimen/view_padding">
 
-            <TextView
-                android:id="@+id/city_textView"
-                android:layout_width="@dimen/current_dimen"
-                android:layout_height="0dp"
-                android:gravity="center"
-                android:padding="@dimen/view_padding"
-                android:text="TextView"
-                android:textSize="@dimen/current_city_text_size"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/current_icon_imageView"
-                app:layout_constraintTop_toBottomOf="@id/temp_textview" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/current_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/temp_textview"
-                android:layout_width="@dimen/current_dimen"
-                android:layout_height="@dimen/current_icon_dimen"
-                android:gravity="center"
-                android:padding="@dimen/view_padding"
-                android:text="temp"
-                android:textSize="@dimen/current_temp_text_size"
-                app:layout_constraintBottom_toTopOf="@id/city_textView"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/current_icon_imageView"
-                app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/current_icon_imageView"
+                    android:layout_width="@dimen/current_icon_dimen"
+                    android:layout_height="@dimen/current_icon_dimen"
+                    android:contentDescription="weather icon"
+                    android:padding="@dimen/view_padding"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/temp_textview"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:drawable/btn_star_big_on" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/city_textView"
+                    android:layout_width="@dimen/current_dimen"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:padding="@dimen/view_padding"
+                    android:text="TextView"
+                    android:textSize="@dimen/current_city_text_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/current_icon_imageView"
+                    app:layout_constraintTop_toBottomOf="@id/temp_textview" />
+
+                <TextView
+                    android:id="@+id/temp_textview"
+                    android:layout_width="@dimen/current_dimen"
+                    android:layout_height="@dimen/current_icon_dimen"
+                    android:gravity="center"
+                    android:padding="@dimen/view_padding"
+                    android:text="temp"
+                    android:textSize="@dimen/current_temp_text_size"
+                    app:layout_constraintBottom_toTopOf="@id/city_textView"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/current_icon_imageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/daily_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/view_padding" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/daily_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/view_padding" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</layout>

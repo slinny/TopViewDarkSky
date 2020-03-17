@@ -11,8 +11,6 @@ import com.example.android.topviewdarksky.models.CurrentWeather;
 
 import java.util.List;
 
-import io.reactivex.Single;
-
 //implements database calls in order to query and insert specific data
 @Dao
 public interface WeatherDAO{

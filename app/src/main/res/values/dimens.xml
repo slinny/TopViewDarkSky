@@ -9,4 +9,5 @@
     <dimen name="item_dimen">50dp</dimen>
     <dimen name="item_padding">5dp</dimen>
     <dimen name="item_text_size">15sp</dimen>
+    <dimen name="no_network_text_size">50sp</dimen>
 </resources>
