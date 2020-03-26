@@ -172,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
 }
 
 /*
+1. branch11, working branch
 2. unit and UI test
 5. dagger2
 6. rxjava
