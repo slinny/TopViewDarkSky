@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private CurrentWeather mCurrentWeather;
     private WeatherAdapter weatherAdapter;
     private LinearLayoutManager linearLayoutManager;
-    String currentCityName;
+    public static String currentCityName;
 
     public static double latitude;
     public static double longitude;

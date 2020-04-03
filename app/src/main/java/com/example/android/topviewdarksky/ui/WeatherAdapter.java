@@ -1,10 +1,12 @@
 package com.example.android.topviewdarksky.ui;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.LongDef;
 import androidx.annotation.NonNull;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +40,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherV
         holder.bind(dailyData);
         holder.setIcon(dailyData.getIcon());
         String day = TimeUtils.getDayOfWeek(dailyData.getTime().toString());
+        Log.d("todayTime", dailyWeatherDataList.get(0).getTime().toString());
         holder.dateTextView.setText(day);
         holder.dailyHigh.setText(setTemp(dailyData.getTemperatureHigh()));
         holder.dailyLow.setText(setTemp(dailyData.getTemperatureLow()));
@@ -69,9 +72,9 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherV
             listItemDailyBinding.executePendingBindings();
         }
 
-        public void setWeekday(String weekday) {
-            this.dateTextView.setText(weekday);
-        }
+//        public void setWeekday(String weekday) {
+//            this.dateTextView.setText(weekday);
+//        }
         public void setIcon(String resource) {
             Integer imageRsc = WeatherIcons.getIconResource(resource);
             this.dailyIconImageView.setImageResource(Integer.valueOf(imageRsc));
