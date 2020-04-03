@@ -76,6 +76,10 @@ dependencies {
     //Reactive Streams (convert an Observable to LiveData)
     implementation 'android.arch.lifecycle:reactivestreams:1.1.1'
 
+    //EASY PERMISSION
+    implementation 'pub.devrel:easypermissions:3.0.0'
+
+
 //    // Dagger
 //    def dagger_version = "2.22"
 //
