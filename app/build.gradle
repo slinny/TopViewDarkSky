@@ -20,6 +20,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField 'String', "ApiKey", API_KEY
         }
+        debug {
+            pseudoLocalesEnabled true
+        }
     }
     dataBinding {
         enabled = true
